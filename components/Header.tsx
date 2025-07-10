@@ -41,7 +41,7 @@ export default function Header() {
             >
               <Link
                 href={link.href}
-                className='text-[#F8FAFC] font-medium transition-colors duration-300 hover:text-[#00FFFF]'
+                className=' font-medium transition-colors duration-300 hover:text-[#00FFFF]'
               >
                 {link.name}
                 {/* ✅ Underline Animation */}
@@ -140,49 +140,50 @@ export default function Header() {
           opacity: open ? 1 : 0,
           height: open ? 'auto' : 0,
         }}
-        transition={{ duration: 0.5 }}
-        className='md:hidden overflow-hidden bg-[#00FFFF] shadow-lg px-4 py-5 space-y-5 mt-5 text-center'
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className='md:hidden overflow-hidden bg-[#00FFFF] shadow-lg rounded-xl px-6 py-6 mt-4 mx-2 space-y-6 text-center'
       >
-        <nav className='flex flex-col space-y-3 '>
+        {/* Navigation Links */}
+        <nav className='flex flex-col space-y-4'>
           {navLinks.map((link) => (
             <Link
               onClick={toggleMenu}
               key={link.name}
               href={link.href}
-              className='text-[#0F0F0F] text-xl font-medium hover:text-[#FF073A] py-2 transition-colors duration-300'
+              className='text-[#0F0F0F] text-lg font-semibold py-2 hover:text-[#FF073A] transition-all duration-300'
             >
               {link.name}
             </Link>
           ))}
         </nav>
-        <div className='pt-4 border-t border-[#0F0F0F]'>
-          <div className='flex justify-center space-x-5 '>
-            <Link
-              className='text-[#0F0F0F] transition-colors duration-300'
-              href={'https://github.com/mahedy25'}
-            >
-              <Github className='h-6 w-6' />
-            </Link>
 
+        {/* Divider */}
+        <div className='border-t border-[#0F0F0F]/30 pt-4'>
+          {/* Social Icons */}
+          <div className='flex justify-center items-center gap-6'>
             <Link
-              className='text-[#0F0F0F] transition-colors duration-300'
-              href={'https://github.com/mahedy25'}
+              className='text-[#0F0F0F] hover:text-[#FF073A] transition-colors duration-300'
+              href='https://github.com/mahedy25'
             >
-              <Facebook className='h-6 w-6' />
+              <Github className='w-5 h-5' />
             </Link>
-
             <Link
-              className='text-[#0F0F0F] transition-colors duration-300'
-              href={'https://github.com/mahedy25'}
+              className='text-[#0F0F0F] hover:text-[#FF073A] transition-colors duration-300'
+              href='https://facebook.com/mahedy25'
             >
-              <Instagram className='h-6 w-6' />
+              <Facebook className='w-5 h-5' />
             </Link>
-
             <Link
-              className='text-[#0F0F0F] transition-colors duration-300'
-              href={'https://github.com/mahedy25'}
+              className='text-[#0F0F0F] hover:text-[#FF073A] transition-colors duration-300'
+              href='https://instagram.com/mahedy25'
             >
-              <Linkedin className='h-6 w-6' />
+              <Instagram className='w-5 h-5' />
+            </Link>
+            <Link
+              className='text-[#0F0F0F] hover:text-[#FF073A] transition-colors duration-300'
+              href='https://linkedin.com/in/mahedy25'
+            >
+              <Linkedin className='w-5 h-5' />
             </Link>
           </div>
         </div>

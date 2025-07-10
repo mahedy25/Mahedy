@@ -18,11 +18,11 @@ export default function Logo() {
     >
       <div className='flex items-center'>
         <Link href="/">
-         <div className='text-xl px-4 py-3 font-extrabold rounded-xl text-center  bg-[#FF073A] hover:bg-[#00FFFF] hover:text-[#0F0F0F]'>
+         <div className='text-xl px-3  md:px-4 py-3 font-extrabold rounded-xl text-center  bg-[#FF073A] hover:bg-[#00FFFF] hover:text-[#0F0F0F]   transition-colors duration-300 '>
           M
         </div>
         </Link>
-        <span className='ml-2 text-sm md:text-xl lg:text-2xl  font-bold bg-gradient-to-r  bg-clip-text'>
+        <span className='ml-2 text-sm md:text-xl lg:text-2xl text-slate-300 font-bold bg-gradient-to-r  bg-clip-text '>
           MAHEDY HASAN
         </span>
       </div>
