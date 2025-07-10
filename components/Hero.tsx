@@ -2,9 +2,7 @@
 
 import { useGSAP } from '@gsap/react'
 import Spline from '@splinetool/react-spline'
-
 import gsap from 'gsap'
-
 import { useRef } from 'react'
 
 gsap.registerPlugin(useGSAP)
@@ -30,35 +28,39 @@ export default function Hero() {
         ease: 'power4.out',
       },
       '-=0.8'
-    ) // overlaps slightly with first line ending
+    )
   })
 
   return (
-    <main className='h-screen flex md:flex-row flex-col-reverse items-center justify-center text-center md:text-start'>
-      <div className='max-w-7xl mx-auto w-full'>
-        {/* left side */}
-
+    <main className="relative h-screen flex md:flex-row flex-col-reverse items-center justify-center text-center md:text-start overflow-x-hidden">
+      {/* Left Side */}
+      <div className="max-w-7xl mx-auto w-full z-10 px-6">
         <div>
           <h1
             ref={firstLineRef}
-            className='text-3xl md:text-5xl lg:text-6xl font-bold z-10 mb-3 leading-tight'
+            className="text-3xl md:text-5xl lg:text-6xl font-bold z-10 mb-3 leading-tight"
           >
-            Hi, I&apos;m <br />{' '}
-            <span className='text-[#00FFFF]'>MAHEDY HASAN</span>
+            Hi, I&apos;m <br />
+            <span className="text-[#00FFFF]">MAHEDY HASAN</span>
           </h1>
 
           <h2
             ref={secondLineRef}
-            className='text-2xl md:text-3xl lg:text-4xl font-medium z-10 leading-snug text-slate-300'
+            className="text-2xl md:text-3xl lg:text-4xl font-medium z-10 leading-snug text-slate-300"
           >
             Crafting Code That Speaks Design.
           </h2>
         </div>
       </div>
 
-      <div className='w-full h-[400px] lg:h-[600px] ml-4 md:block hidden'>
-        <Spline scene='https://prod.spline.design/EehE9S4DiNckWvlX/scene.splinecode' />
-      </div>
+      {/* Right Side (Spline) */}
+   
+      
+          <Spline
+          className='absolute right-[-28%] hidden md:block'
+          scene="https://prod.spline.design/EehE9S4DiNckWvlX/scene.splinecode" />
+      
+   
     </main>
   )
 }
