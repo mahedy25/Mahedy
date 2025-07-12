@@ -2,6 +2,7 @@ import Hero from '@/components/Hero'
 import Header from '../components/Header'
 
 import Projects from '@/components/Projects'
+import CustomCursor from '@/components/customCursor'
 
 
 export default function Home() {
@@ -9,7 +10,7 @@ export default function Home() {
     <main className='px-4 sm:px-8 lg:px-12  '>
       <Header />
       <Hero />
-{/*       <CustomCursor /> */}
+  <CustomCursor />
       <Projects />
     </main>
   )
