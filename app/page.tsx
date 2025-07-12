@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero'
 import Header from '../components/Header'
 import CustomCursor from '@/components/customCursor'
+import Projects from '@/components/Projects'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <Hero />
       <CustomCursor />
+      <Projects />
     </main>
   )
 }

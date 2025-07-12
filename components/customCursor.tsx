@@ -13,15 +13,14 @@ export default function CustomCursor() {
   useGSAP(() => {
     const cursor = cursorRef.current
     const cursorBorder = cursorBorderRef.current
-
     if (!cursor || !cursorBorder) return
 
     gsap.set([cursor, cursorBorder], { x: -50, y: -50 })
 
-    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.2, ease: 'power3.out' })
-    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.2, ease: 'power3.out' })
-    const xToBorder = gsap.quickTo(cursorBorder, 'x', { duration: 0.5, ease: 'power3.out' })
-    const yToBorder = gsap.quickTo(cursorBorder, 'y', { duration: 0.5, ease: 'power3.out' })
+    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power3.out' })
+    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power3.out' })
+    const xToBorder = gsap.quickTo(cursorBorder, 'x', { duration: 0.4, ease: 'power3.out' })
+    const yToBorder = gsap.quickTo(cursorBorder, 'y', { duration: 0.4, ease: 'power3.out' })
 
     const handleMouseMove = (e: MouseEvent) => {
       xTo(e.clientX)
@@ -30,27 +29,44 @@ export default function CustomCursor() {
       yToBorder(e.clientY)
     }
 
+    const handleMouseDown = () => {
+      if (cursor) gsap.to(cursor, { scale: 0.6, duration: 0.15 })
+      if (cursorBorder) gsap.to(cursorBorder, { scale: 1.3, duration: 0.15 })
+    }
+
+    const handleMouseUp = () => {
+      if (cursor) gsap.to(cursor, { scale: 1, duration: 0.15 })
+      if (cursorBorder) gsap.to(cursorBorder, { scale: 1, duration: 0.15 })
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mouseup', handleMouseUp)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mouseup', handleMouseUp)
     }
   }, [])
 
+  // ✅ Place this after useGSAP to avoid React Hook error
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-
-  // ✅ Conditionally render JSX, not hook
-  if (isMobile) return <></>
+  if (isMobile) return null
 
   return (
     <>
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-[30px] h-[30px] bg-[#00FFFF] border-2 border-white rounded-full pointer-events-none z-[999] mix-blend-difference"
+        className="fixed top-0 left-0 w-[20px] h-[20px] bg-[#00FFFF] rounded-full pointer-events-none z-[9999] mix-blend-difference shadow-[0_0_10px_rgba(0,255,255,0.8)] transition-transform duration-150 ease-out hidden md:block"
       />
       <div
         ref={cursorBorderRef}
-        className="fixed top-0 left-0 w-[60px] h-[60px] border-3 border-[#FF073A] rounded-full pointer-events-none z-[999] mix-blend-difference opacity-50"
+        className="fixed top-0 left-0 w-[50px] h-[50px] rounded-full pointer-events-none z-[9998] border-2 border-white opacity-30 mix-blend-difference transition-transform duration-300 ease-out hidden md:block"
+        style={{
+          boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(4px)',
+        }}
       />
     </>
   )
