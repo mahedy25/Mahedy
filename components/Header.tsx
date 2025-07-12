@@ -18,7 +18,7 @@ export default function Header() {
   const toggleMenu = () => setOpen(!open)
 
   return (
-    <header className='w-full fixed top-0 left-0 z-50 shadow-md px-6 py-4'>
+    <header className='w-full fixed top-0 left-0 z-50 shadow-md px-6 bg-[#0F0F0F] py-4'>
       {' '}
       {/* ✅ fixed z-50 and added bg */}
       <div className='max-w-7xl mx-auto flex justify-between items-center'>
