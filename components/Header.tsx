@@ -3,13 +3,16 @@
 import Logo from './Logo'
 import Link from 'next/link'
 import { Facebook, Github, Instagram, Linkedin, Menu, X } from 'lucide-react'
-import React, { useEffect } from 'react'
+import * as React from 'react'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Header() {
   const pathName = usePathname()
-
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Works', href: '/works' },
@@ -19,22 +22,33 @@ export default function Header() {
   const [open, setOpen] = React.useState(false)
   const toggleMenu = () => setOpen(!open)
 
-  useEffect(() => {
-    const html = document.documentElement
+  const burgerRef = React.useRef<HTMLButtonElement>(null)
 
-    if (open) {
-      html.classList.add('overflow-hidden')
-    } else {
-      html.classList.remove('overflow-hidden')
-    }
+  // Animate burger menu button on scroll
+  React.useEffect(() => {
+    if (!burgerRef.current) return
 
-    return () => {
-      html.classList.remove('overflow-hidden')
-    }
-  }, [open])
+    gsap.set(burgerRef.current, { scale: 0 })
+
+    ScrollTrigger.create({
+      start: 'top -110',
+      onEnter: () =>
+        gsap.to(burgerRef.current, {
+          scale: 1,
+          duration: 0.3,
+          ease: 'back.out(0.7)',
+        }),
+      onLeaveBack: () =>
+        gsap.to(burgerRef.current, {
+          scale: 0,
+          duration: 0.3,
+          ease: 'back.in(2.7)',
+        }),
+    })
+  }, [])
 
   return (
-    <main className='z-50'>
+    <main>
       {/* Header Section */}
       <div className='flex justify-between items-center py-4'>
         {/* Logo */}
@@ -52,9 +66,9 @@ export default function Header() {
           <Logo />
         </motion.div>
 
-        {/* Nav Links - Desktop */}
+        {/* Nav Links */}
         <div className='hidden md:flex'>
-          {navLinks.map((navLink) => {
+          {navLinks.map((navLink, i) => {
             const isActive = pathName === navLink.href
             return (
               <motion.a
@@ -64,7 +78,7 @@ export default function Header() {
                   type: 'spring',
                   stiffness: 200,
                   damping: 20,
-                  delay: 0.7 + navLinks.indexOf(navLink) * 0.1,
+                  delay: 0.7 + i * 0.1,
                 }}
                 key={navLink.name}
                 href={navLink.href}
@@ -83,52 +97,64 @@ export default function Header() {
           })}
         </div>
 
-        {/* Social Media Icons - Desktop */}
-        <motion.div 
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          type: 'spring',
-          stiffness: 200,
-          damping: 25,
-          delay: 1.5,
-          duration: 2,
-        }}
-        className='hidden md:flex transition-colors duration-300'>
+        {/* Social Media Icons + Burger Menu Button */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            type: 'spring',
+            stiffness: 200,
+            damping: 25,
+            delay: 1.5,
+            duration: 2,
+          }}
+          className='hidden md:flex items-center transition-colors duration-300'
+        >
           <Link href='https://github.com/mahedy25'>
-            <Github className='w-6 h-6 mx-4 hover:text-[#00A86B]' />
+            <Github className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
           <Link href='https://linkedin.com'>
-            <Linkedin className='w-6 h-6 mx-4 hover:text-[#00A86B]' />
+            <Linkedin className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
           <Link href='https://facebook.com'>
-            <Facebook className='w-6 h-6 mx-4 hover:text-[#00A86B]' />
+            <Facebook className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
           <Link href='https://instagram.com'>
-            <Instagram className='w-6 h-6 mx-4 hover:text-[#00A86B]' />
+            <Instagram className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
-        </motion.div>
 
-        {/* Mobile Menu Toggle Button */}
-        <div className='md:hidden fixed top-4 right-4 items-center justify-center z-50'>
+          {/* Burger Menu Toggle Button */}
           <motion.button
+            ref={burgerRef}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMenu}
-            className='bg-[#0F0F0F] p-3 rounded-full text-[#DFF6F0]'
+            className='md:ml-25 ml-[-4] md:mt-10 fixed bg-[#0F0F0F] p-6 rounded-full text-[#DFF6F0] scale-0 z-50 cursor-pointer'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </motion.button>
+        </motion.div>
+
+        {/* Mobile Burger Menu Button */}
+        <div className='flex md:hidden'>
+          <button
+            onClick={toggleMenu}
+            className='fixed top-4 right-4 z-50 bg-[#0F0F0F] p-4 rounded-full text-[#DFF6F0]'
+          >
+            {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Burger Menu Overlay */}
       <motion.div
-        initial={{ opacity: 0, x: '100%' }}
-        animate={{ opacity: open ? 1 : 0, x: open ? 0 : '100%' }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className='md:hidden fixed top-0 right-0 w-full h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 text-3xl z-40'
+        initial={{ clipPath: 'circle(0% at 100% 0%)' }}
+        animate={{
+          clipPath: open ? 'circle(150% at 100% 0%)' : 'circle(0% at 100% 0%)',
+        }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        className='fixed top-0 right-0 w-full h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 text-3xl z-40'
       >
-        {/* Nav Links - Mobile */}
+        {/* Burger Menu Links */}
         {navLinks.map((navLink) => {
           const isActive = pathName === navLink.href
           return (
@@ -150,7 +176,7 @@ export default function Header() {
           )
         })}
 
-        {/* Social Media Icons - Mobile */}
+        {/* Burger Menu Social Icons */}
         <div className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
           <Link href='https://github.com/mahedy25'>
             <Github className='w-6 h-6 hover:text-[#00A86B]' />
