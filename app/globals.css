@@ -2,12 +2,9 @@
 @import "tw-animate-css";
 
 
-
-body {
-  
+html, body {
   overflow-x: hidden;
-  position: relative;
-  background-color: #0F0F0F;
-
 }
+
+
 
