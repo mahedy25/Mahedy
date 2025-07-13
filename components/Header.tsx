@@ -8,10 +8,15 @@ import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Header() {
+
+
+
+
   const pathName = usePathname()
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -24,23 +29,25 @@ export default function Header() {
 
   const burgerRef = React.useRef<HTMLButtonElement>(null)
 
-  // Animate burger menu button on scroll
-  React.useEffect(() => {
+  // Animate burger menu using useGSAP
+  useGSAP(() => {
     if (!burgerRef.current) return
 
-    gsap.set(burgerRef.current, { scale: 0 })
+    gsap.set(burgerRef.current, { scale: 0, visibility: 'hidden' })
 
     ScrollTrigger.create({
       start: 'top -110',
       onEnter: () =>
         gsap.to(burgerRef.current, {
           scale: 1,
+          visibility: 'visible',
           duration: 0.3,
           ease: 'back.out(0.7)',
         }),
       onLeaveBack: () =>
         gsap.to(burgerRef.current, {
           scale: 0,
+          visibility: 'hidden',
           duration: 0.3,
           ease: 'back.in(2.7)',
         }),
@@ -97,7 +104,7 @@ export default function Header() {
           })}
         </div>
 
-        {/* Social Media Icons + Burger Menu Button */}
+        {/* Social Media Icons + Desktop Burger Button */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -123,12 +130,12 @@ export default function Header() {
             <Instagram className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
 
-          {/* Burger Menu Toggle Button */}
+          {/* Burger Menu Toggle Button (desktop) */}
           <motion.button
             ref={burgerRef}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMenu}
-            className='md:ml-25 ml-[-4] md:mt-10 fixed bg-[#0F0F0F] p-6 rounded-full text-[#DFF6F0] scale-0 z-50 cursor-pointer'
+            className='md:ml-25 ml-[-4] md:mt-10 fixed bg-[#0F0F0F] hover:bg-[#00A86B] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </motion.button>
