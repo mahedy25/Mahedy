@@ -1,8 +1,7 @@
 // app/layout.tsx
 import './globals.css'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono , Poppins} from 'next/font/google'
-
+import { Geist, Geist_Mono, Poppins } from 'next/font/google'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,11 +30,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#DFF6F0] text-[#333333] `}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased `}
       >
-        {children}
+        <div className='md:px-6 '>{children}</div>
       </body>
     </html>
   )
