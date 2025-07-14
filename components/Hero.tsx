@@ -5,6 +5,12 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Link from 'next/link'
 import { Globe } from 'lucide-react'
+import { BoxesCore } from './ui/background-boxes'
+
+
+
+
+
 
 
 
@@ -87,6 +93,8 @@ export default function Hero() {
   }
 
   return (
+    <>
+    <BoxesCore />
     <section
     id='/'
       ref={containerRef}
@@ -140,5 +148,6 @@ export default function Hero() {
         
       </div>
     </section>
+    </>
   )
 }

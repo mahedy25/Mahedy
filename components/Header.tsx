@@ -74,7 +74,7 @@ export default function Header() {
   return (
     <main>
       {/* Header Section */}
-      <div className='flex justify-between items-center py-4 px-4 md:px-8 '>
+      <div className='flex bg-[#DFF6F0] justify-between items-center py-4 px-4 md:px-8 '>
         {/* Logo */}
         <motion.div
           initial={{ x: -50, opacity: 0 }}
