@@ -16,8 +16,10 @@ export default function Header() {
   const pathName = usePathname()
   const [open, setOpen] = React.useState(false)
   const toggleMenu = () => setOpen((prev) => !prev)
-  const burgerRef = React.useRef<HTMLButtonElement>(null)
 
+  const burgerRef = React.useRef<HTMLButtonElement>(null)
+  const linkRefs = React.useRef<(HTMLAnchorElement | null)[]>([])
+  const sidebarRef = React.useRef(null)
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -25,7 +27,7 @@ export default function Header() {
     { name: 'About', href: '/about' },
   ]
 
-  // GSAP: Show desktop burger button on scroll
+  // GSAP: Show burger button on scroll
   useGSAP(() => {
     if (!burgerRef.current) return
 
@@ -50,7 +52,25 @@ export default function Header() {
     })
   }, [])
 
-  
+  // GSAP: Animate sidebar links on open (desktop only)
+  useGSAP(() => {
+    if (!open || typeof window === 'undefined' || window.innerWidth < 768)
+      return
+
+    if (linkRefs.current.length > 0) {
+      gsap.from(linkRefs.current, {
+        x: 50,
+        opacity: 0,
+        stagger: 0.3,
+        ease: 'power3.out',
+        duration: 0.5,
+      })
+    }
+  }, [open])
+
+
+
+
   return (
     <main>
       {/* Header Section */}
@@ -131,7 +151,7 @@ export default function Header() {
             ref={burgerRef}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMenu}
-            className='fixed md:ml-25 md:mt-10  right-6 bg-[#0F0F0F] hover:bg-[#00A86B] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
+            className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#00A86B] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </motion.button>
@@ -153,28 +173,31 @@ export default function Header() {
         {open && (
           <motion.div
             key='sidebar'
+            ref={sidebarRef}
             initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F]  text-white flex flex-col items-center justify-center gap-10 text-6xl z-40'
+            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-6xl text-3xl z-40'
           >
-            {navLinks.map((navLink) => {
+            {navLinks.map((navLink, index) => {
               const isActive = pathName === navLink.href
               return (
-               
-                
-                  <Link
-                    key={navLink.name}
-                    href={navLink.href}
-                    onClick={toggleMenu}
-                    className={`relative font-medium transition-colors hover:text-[#00A868] duration-300  group ${
-                      isActive ? 'text-[#00A86B]' : ''
-                    }`}
-                  >
-                    {navLink.name}
-                  </Link>
-               
+                <Link
+                  key={navLink.name}
+                  href={navLink.href}
+                  onClick={toggleMenu}
+                  ref={
+                    ((el: HTMLAnchorElement | null) => {
+                      linkRefs.current[index] = el
+                    }) as React.RefCallback<HTMLAnchorElement>
+                  }
+                  className={`relative font-medium transition-colors hover:text-[#00A868] duration-300 group ${
+                    isActive ? 'text-[#00A86B]' : ''
+                  }`}
+                >
+                  {navLink.name}
+                </Link>
               )
             })}
 
