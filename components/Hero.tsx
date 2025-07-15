@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Link from 'next/link'
 import { Globe } from 'lucide-react'
-import { BoxesCore } from './ui/background-boxes'
+
 
 
 
@@ -93,22 +93,22 @@ export default function Hero() {
   }
 
   return (
-    <>
-    <BoxesCore />
+    
+
     <section
     id='/'
       ref={containerRef}
       className='min-h-screen flex flex-col md:flex-row items-center justify-between px-6 py-20'
     >
       {/* Left Side */}
-      <div ref={leftRef} className='md:w-1/2 text-center md:text-left'>
+      <div ref={leftRef} className=' text-center md:text-left'>
         <h1
           ref={headingRef}
           className='text-3xl md:text-5xl lg:text-7xl font-bold mb-4 text-[#00A86B]'
         >
           Next JS Front end Web Developer
         </h1>
-        <p ref={subheadingRef} className='text-lg md:text-xl mb-6'>
+        <p ref={subheadingRef} className="text-lg md:text-xl mb-6">
           Hello, I&apos;m Mahedy Hasan. I create stunning UI/UX rich websites.
         </p>
 
@@ -117,7 +117,7 @@ export default function Hero() {
           ref={locationRef}
           className='md:border-l-2 border-[#00A86B] pl-3 flex flex-col md:flex-row items-center gap-2 mt-4'
         >
-          <p className='text-base md:text-lg text-gray-800'>
+          <p className="text-base md:text-lg text-gray-800">
             Based in <strong>Chittagong, Bangladesh</strong>
           </p>
 
@@ -144,10 +144,9 @@ export default function Hero() {
       </div>
 
       {/* Right Side */}
-      <div ref={rightRef} className='md:w-1/2 mt-10 md:mt-0'>
+      <div  className='relative mt-10 md:mt-0'>
         
       </div>
     </section>
-    </>
   )
 }

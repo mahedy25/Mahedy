@@ -10,6 +10,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 
+
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Header() {
@@ -68,13 +69,15 @@ export default function Header() {
     }
   }, [open])
 
+  
+
 
 
 
   return (
     <main>
       {/* Header Section */}
-      <div className='flex bg-[#DFF6F0] justify-between items-center py-4 px-4 md:px-8 '>
+      <div className='flex  justify-between items-center py-4 px-4 md:px-8 '>
         {/* Logo */}
         <motion.div
           initial={{ x: -50, opacity: 0 }}
@@ -134,6 +137,7 @@ export default function Header() {
           }}
           className='hidden md:flex items-center transition-colors  duration-300'
         >
+    
           <Link href='https://github.com/mahedy25'>
             <Github className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
@@ -147,6 +151,10 @@ export default function Header() {
             <Instagram className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
           </Link>
 
+      
+    
+
+
           <motion.button
             ref={burgerRef}
             whileTap={{ scale: 0.9 }}
@@ -155,7 +163,13 @@ export default function Header() {
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </motion.button>
+
+      
+
+
         </motion.div>
+
+        
 
         {/* Mobile Burger Button */}
         <div className='flex md:hidden'>
@@ -201,7 +215,7 @@ export default function Header() {
               )
             })}
 
-            <div className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
+            <div  className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
               <Link href='https://github.com/mahedy25'>
                 <Github className='w-6 h-6 hover:text-[#00A86B]' />
               </Link>
@@ -215,7 +229,9 @@ export default function Header() {
                 <Instagram className='w-6 h-6 hover:text-[#00A86B]' />
               </Link>
             </div>
+    
           </motion.div>
+          
         )}
       </AnimatePresence>
     </main>
