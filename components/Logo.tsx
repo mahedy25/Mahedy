@@ -4,11 +4,11 @@ import { Lobster } from 'next/font/google'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
-const lobster = Lobster({
-  variable: '--font-lobster',
-  subsets: ['latin'],
-  weight: ['400'],
+const lobster = Lobster({ 
+  weight: '400', 
+  subsets: ['latin'] 
 })
+
 
 export default function Logo() {
   const [hovered, setHovered] = useState(false)

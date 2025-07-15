@@ -4,6 +4,13 @@ import Image from 'next/image'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
+import { Lobster } from 'next/font/google'
+import { useGSAP } from '@gsap/react'
+
+const lobster = Lobster({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export default function HeroSection() {
   const firstText = useRef<HTMLParagraphElement | null>(null)
@@ -46,14 +53,47 @@ export default function HeroSection() {
     xPercent += 0.1 * direction
   }
 
+  useGSAP(() => {
+    gsap.fromTo(
+      '#mainText .line span',
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power4.out',
+        stagger: 0.25,
+      }
+    )
+  }, [])
+
   return (
-    <main className='relative flex h-screen mb-[100vh] overflow-hidden'>
+    <main className='relative flex h-screen mb-[100vh] overflow-hidden '>
       {/* Positioned Text */}
-      <div className='absolute top-1/2  -translate-y-1/2 z-10 max-w-[500px] text-left'>
-        <h1 className='text-xl md:text-3xl lg:text-6xl leading-snug font-extrabold'>
-          Hello, I&apos;m Mahedy Hasan.
+      <div
+        id='mainText'
+        className='absolute top-[25%] px-4 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[700px] text-left'
+      >
+        <h1
+          className={`${lobster.className} text-4xl md:text-5xl lg:text-7xl leading-snug font-extrabold`}
+        >
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>Hello, I&apos;m</span>
+          </span>
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>Mahedy Hasan.</span>
+          </span>
         </h1>
-        <p className='text-lg md:text-xl font-semibold lg:text-2xl'>I create UI/UX rich websites with Next.js, Tailwind CSS, GSAP & Framer-motion</p>
+        <div className='mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl'>
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>I create UI/UX rich websites</span>
+          </span>
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>
+              with Next.js, Tailwind CSS, GSAP, Framer-motion & more...
+            </span>
+          </span>
+        </div>
       </div>
 
       {/* Background Image */}
@@ -61,7 +101,7 @@ export default function HeroSection() {
         src='/images/heroBackground.png'
         alt='background'
         fill
-        className='object-contain object-bottom brightness-105 contrast-110'
+        className='object-contain object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom  brightness-105 contrast-110'
         priority
       />
 
@@ -72,13 +112,13 @@ export default function HeroSection() {
             ref={firstText}
             className='inline-block m-0 text-[230px] font-medium pr-[50px]'
           >
-            Next JS Developer -
+            Next JS Developer - Next JS Developer -
           </p>
           <p
             ref={secondText}
             className='inline-block m-0 text-[230px] font-medium pr-[50px]'
           >
-            Next JS Developer -
+            Next JS Developer - Next JS Developer -
           </p>
         </div>
       </div>

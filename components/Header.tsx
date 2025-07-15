@@ -126,48 +126,51 @@ export default function Header() {
 
         {/* Social Icons + Desktop Burger Button */}
         <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: 'spring',
-            stiffness: 200,
-            damping: 25,
-            delay: 1.5,
-            duration: 2,
-          }}
-          className='hidden md:flex items-center transition-colors  duration-300'
-        >
-    
-          <Link href='https://github.com/mahedy25'>
-            <Github className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
-          </Link>
-          <Link href='https://linkedin.com'>
-            <Linkedin className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
-          </Link>
-          <Link href='https://facebook.com'>
-            <Facebook className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
-          </Link>
-          <Link href='https://instagram.com'>
-            <Instagram className='w-6 h-6 mx-2 hover:text-[#00A86B]' />
-          </Link>
+  initial={{ scale: 0, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  transition={{
+    type: 'spring',
+    stiffness: 200,
+    damping: 25,
+    delay: 1.5,
+    duration: 2,
+  }}
+  className='hidden md:flex items-center gap-4 transition-colors duration-300'
+>
+  {/* Animated Social Icons */}
+  {[
+    { href: 'https://github.com/mahedy25', icon: <Github className='w-6 h-6 mx-2 text-[#333333] hover:text-[#00A86B]' />, delay: 1.6 },
+    { href: 'https://linkedin.com', icon: <Linkedin className='w-6 h-6 mx-2 text-[#333333] hover:text-[#00A86B]' />, delay: 1.7 },
+    { href: 'https://facebook.com', icon: <Facebook className='w-6 h-6 mx-2 text-[#333333] hover:text-[#00A86B]' />, delay: 1.8 },
+    { href: 'https://instagram.com', icon: <Instagram className='w-6 h-6 mx-2 text-[#333333] hover:text-[#00A86B]' />, delay: 1.9 },
+  ].map(({ href, icon, delay }, index) => (
+    <motion.div
+      key={index}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        stiffness: 200,
+        damping: 25,
+        delay,
+        duration: 1.2,
+      }}
+    >
+      <Link href={href}>{icon}</Link>
+    </motion.div>
+  ))}
 
-      
-    
+  {/* Animated Burger Button */}
+  <motion.button
+    ref={burgerRef}
+    whileTap={{ scale: 0.9 }}
+    onClick={toggleMenu}
+    className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#00A86B] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
+  >
+    {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
+  </motion.button>
+</motion.div>
 
-
-          <motion.button
-            ref={burgerRef}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMenu}
-            className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#00A86B] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
-          >
-            {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
-          </motion.button>
-
-      
-
-
-        </motion.div>
 
         
 
@@ -215,20 +218,29 @@ export default function Header() {
               )
             })}
 
-            <div  className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
-              <Link href='https://github.com/mahedy25'>
-                <Github className='w-6 h-6 hover:text-[#00A86B]' />
-              </Link>
-              <Link href='https://linkedin.com'>
-                <Linkedin className='w-6 h-6 hover:text-[#00A86B]' />
-              </Link>
-              <Link href='https://facebook.com'>
-                <Facebook className='w-6 h-6 hover:text-[#00A86B]' />
-              </Link>
-              <Link href='https://instagram.com'>
-                <Instagram className='w-6 h-6 hover:text-[#00A86B]' />
-              </Link>
-            </div>
+            <div className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
+  {[
+    { href: 'https://github.com/mahedy25', icon: <Github className='w-6 h-6 hover:text-[#00A86B]' />, delay: 0.1 },
+    { href: 'https://linkedin.com', icon: <Linkedin className='w-6 h-6 hover:text-[#00A86B]' />, delay: 0.2 },
+    { href: 'https://facebook.com', icon: <Facebook className='w-6 h-6 hover:text-[#00A86B]' />, delay: 0.3 },
+    { href: 'https://instagram.com', icon: <Instagram className='w-6 h-6 hover:text-[#00A86B]' />, delay: 0.4 },
+  ].map(({ href, icon, delay }, index) => (
+    <motion.div
+      key={index}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        stiffness: 200,
+        damping: 25,
+        delay,
+        duration: 1.2,
+      }}
+    >
+      <Link href={href}>{icon}</Link>
+    </motion.div>
+  ))}
+</div>
     
           </motion.div>
           
