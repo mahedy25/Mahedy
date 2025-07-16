@@ -83,52 +83,52 @@ export default function HeroSection() {
         className='absolute top-[25%] px-4 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[700px] text-left'
       >
         <h1
-          className={`${lobster.className} text-4xl md:text-5xl lg:text-7xl leading-snug font-extrabold`}
+          className={`${lobster.className} w-[300px] md:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-extrabold`}
         >
           <span className='line block overflow-hidden'>
-            <span className='inline-block'>Hello, I&apos;m</span>
+            <span className='inline-block'>Next.JS</span>
           </span>
           <span className='line block overflow-hidden'>
-            <span className='inline-block '>Mahedy Hasan.</span>
+            <span className='inline-block '>Front-end web developer</span>
           </span>
         </h1>
         <div className='mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl text-[#990000]'>
           <span className='line block overflow-hidden '>
-            <span className='inline-block'>I create UI/UX rich websites</span>
+            <span className='inline-block'>Beautiful, Functional, and Fast</span>
           </span>
           <span className='line block overflow-hidden'>
             <span className='inline-block'>
-              with Next.js, Tailwind CSS, GSAP, Framer-motion & more...
+              — Every Pixel Counts.
             </span>
           </span>
         </div>
       </div>
 
       {/* ✅ Wrapped Image with fade-in animation */}
-      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0'>
+      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0 bg-[#DFF6F0]'>
         <Image
-          src='/images/heroBackground.png'
+          src='/images/heroBg.png'
           alt='background'
           fill
-          className='object-contain object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom brightness-105 contrast-110'
+          className='object-contain  object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom brightness-105 contrast-110 '
           priority
         />
       </div>
 
       {/* Scrolling Text Animation */}
       <div className='absolute top-[calc(100vh-350px)] w-full overflow-hidden'>
-        <div ref={slider} className='relative whitespace-nowrap w-max text-[#990000]'>
+        <div ref={slider} className={`relative ${lobster.className}  whitespace-nowrap w-max text-[#990000]`}>
           <p
             ref={firstText}
             className='inline-block m-0  text-[230px] font-medium pr-[50px]'
           >
-            Next JS Developer - Next JS Developer -
+            Freelance Developer - 
           </p>
           <p
             ref={secondText}
             className='inline-block m-0 text-[230px] font-medium pr-[50px]'
           >
-            Next JS Developer - Next JS Developer -
+            Freelance Developer - 
           </p>
         </div>
       </div>

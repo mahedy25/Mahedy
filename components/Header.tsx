@@ -93,7 +93,7 @@ export default function Header() {
                   damping: 20,
                   delay: 0.7 + i * 0.1,
                 }}
-                className={`mx-5 relative font-medium transition-colors duration-300 group ${
+                className={`mx-4 relative font-medium text-xl transition-colors duration-300 group ${
                   isActive ? 'text-[#990000]' : ''
                 }`}
               >
@@ -116,10 +116,10 @@ export default function Header() {
             type: 'spring',
             stiffness: 200,
             damping: 25,
-            delay: 1.5,
+            delay: 1,
             duration: 2,
           }}
-          className='hidden md:flex items-center gap-4 transition-colors duration-300'
+          className='hidden md:flex items-center  transition-colors duration-300'
         >
           {/* Animated Social Icons */}
           {[
@@ -228,22 +228,22 @@ export default function Header() {
                 {
                   href: 'https://github.com/mahedy25',
                   icon: <Github className='w-6 h-6 hover:text-[#990000]' />,
-                  delay: 0.1,
+                  delay: 0.7,
                 },
                 {
                   href: 'https://linkedin.com',
                   icon: <Linkedin className='w-6 h-6 hover:text-[#990000]' />,
-                  delay: 0.2,
+                  delay: 0.8,
                 },
                 {
                   href: 'https://facebook.com',
                   icon: <Facebook className='w-6 h-6 hover:text-[#990000]' />,
-                  delay: 0.3,
+                  delay: 0.9,
                 },
                 {
                   href: 'https://instagram.com',
                   icon: <Instagram className='w-6 h-6 hover:text-[#990000]' />,
-                  delay: 0.4,
+                  delay: 1,
                 },
               ].map(({ href, icon, delay }, index) => (
                 <motion.div
@@ -255,7 +255,7 @@ export default function Header() {
                     stiffness: 200,
                     damping: 25,
                     delay,
-                    duration: 1.2,
+                    duration: 5,
                   }}
                 >
                   <Link href={href}>{icon}</Link>
