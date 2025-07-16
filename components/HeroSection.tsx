@@ -94,11 +94,11 @@ export default function HeroSection() {
         </h1>
         <div className='mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl text-[#990000]'>
           <span className='line block overflow-hidden '>
-            <span className='inline-block'>Beautiful, Functional, and Fast</span>
+            <span className='inline-block'>Create Beautiful, Functional, and Fast websites</span>
           </span>
           <span className='line block overflow-hidden'>
             <span className='inline-block'>
-              — Every Pixel Counts.
+              — Based In Bangladesh.
             </span>
           </span>
         </div>
@@ -110,7 +110,7 @@ export default function HeroSection() {
           src='/images/heroBg.png'
           alt='background'
           fill
-          className='object-contain  object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom brightness-105 contrast-110 '
+          className='object-contain  object-bottom  ml-26 sm:ml-7  brightness-105 contrast-110 '
           priority
         />
       </div>

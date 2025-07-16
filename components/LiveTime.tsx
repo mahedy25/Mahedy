@@ -26,8 +26,10 @@ export default function LiveTime() {
   }, [])
 
   return (
+    
     <div className={` hidden fixed md:block bottom-4 right-7 bg-white text-black font-semibold ${lobster.className} px-3 py-1 rounded shadow  z-99`}>
       Bangladesh - {time}
     </div>
+
   )
 }

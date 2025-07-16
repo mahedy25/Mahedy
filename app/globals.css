@@ -3,11 +3,22 @@
 
 
 html, body {
+  height: 100%; /* Ensure full height of the viewport */
+  width: 100%;  /* Ensure full width of the viewport */
+  margin: 0;    /* Remove default margins */
+  padding: 0;   /* Remove default padding */
   overflow-x: hidden;
+  /* Add any other base styles you need, like font-family, color, etc. */
+}
+
+/* If you are using Next.js, also ensure the root div (#__next or #_next) spans full height */
+#__next, #_next {
+  height: 100%;
 }
 
 
-@import "tailwindcss";
+/* Your theme inline and other imports */
+@import "tailwindcss"; /* This is duplicated, remove one */
 
 @theme inline {
   --animate-aurora: aurora 60s linear infinite;
@@ -24,4 +35,3 @@ html, body {
     }
   }
 }
-

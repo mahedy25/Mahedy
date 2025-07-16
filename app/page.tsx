@@ -3,6 +3,7 @@
 import Header from '../components/Header'
 import HeroSection from '@/components/HeroSection'
 import LiveTime from '@/components/LiveTime'
+import Projects from '@/components/Projects'
 
 
 
@@ -13,8 +14,9 @@ export default function Home() {
     <main className=' sm:px-8 lg:px-12 bg-[#DFF6F0] text-[#333333]'>
       <Header />
       <HeroSection />
-    {/* <Projects /> */}
+     <Projects />
     <LiveTime />
+    
     </main>
   )
 }
