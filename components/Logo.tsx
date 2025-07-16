@@ -1,35 +1,52 @@
 'use client'
+
 import Link from 'next/link'
 import { Lobster } from 'next/font/google'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
 
 const lobster = Lobster({ 
   weight: '400', 
   subsets: ['latin'] 
 })
 
-
 export default function Logo() {
   const [hovered, setHovered] = useState(false)
+  const logoRef = useRef<HTMLHeadingElement | null>(null)
+
+  // ✅ GSAP entry animation from bottom
+  useEffect(() => {
+    gsap.fromTo(
+      logoRef.current,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: 'easeInOut',
+        delay: 0.2,
+      }
+    )
+  }, [])
 
   return (
-    <div>
+    <div className=''>
       <Link href="/">
-        <motion.h1
+        <h1
+          ref={logoRef}
           className={`${lobster.className} text-2xl cursor-pointer`}
-          onHoverStart={() => setHovered(true)}
-          onHoverEnd={() => setHovered(false)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
           style={{
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
-            width: '200px', // fixed width to prevent layout shift
-            height: '32px', // adjust height based on font size
+            width: '200px',
+            height: '32px',
             overflow: 'hidden',
           }}
         >
-          {/* Container with relative position */}
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* "Coded by - Mahedy" layer */}
             <motion.div
@@ -48,7 +65,7 @@ export default function Logo() {
               <span>Mahedy</span>
             </motion.div>
 
-            {/* "Hasan" layer */}
+            {/* "Mahedy Hasan" hover layer */}
             <AnimatePresence>
               {hovered && (
                 <motion.div
@@ -63,12 +80,12 @@ export default function Logo() {
                     top: 0,
                   }}
                 >
-                 Mahedy Hasan
+                  Mahedy Hasan
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
-        </motion.h1>
+        </h1>
       </Link>
     </div>
   )

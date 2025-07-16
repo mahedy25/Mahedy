@@ -16,6 +16,7 @@ export default function HeroSection() {
   const firstText = useRef<HTMLParagraphElement | null>(null)
   const secondText = useRef<HTMLParagraphElement | null>(null)
   const slider = useRef<HTMLDivElement | null>(null)
+  const imageContainer = useRef<HTMLDivElement | null>(null) // ✅ ref for image wrapper
 
   let xPercent = 0
   let direction = -1
@@ -23,10 +24,17 @@ export default function HeroSection() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
+    // ✅ Simple image fade-in
+    gsap.fromTo(
+      imageContainer.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 1.2, ease: 'power4.out' }
+    )
+
     gsap.to(slider.current, {
       scrollTrigger: {
         trigger: document.documentElement,
-        scrub: 0.25,
+        scrub: true,
         start: 0,
         end: window.innerHeight,
         onUpdate: (e) => {
@@ -68,7 +76,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <main className='relative flex h-screen mb-[100vh] overflow-hidden '>
+    <main className='relative flex h-screen mb-[100vh] overflow-hidden'>
       {/* Positioned Text */}
       <div
         id='mainText'
@@ -81,11 +89,11 @@ export default function HeroSection() {
             <span className='inline-block'>Hello, I&apos;m</span>
           </span>
           <span className='line block overflow-hidden'>
-            <span className='inline-block'>Mahedy Hasan.</span>
+            <span className='inline-block '>Mahedy Hasan.</span>
           </span>
         </h1>
-        <div className='mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl'>
-          <span className='line block overflow-hidden'>
+        <div className='mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl text-[#990000]'>
+          <span className='line block overflow-hidden '>
             <span className='inline-block'>I create UI/UX rich websites</span>
           </span>
           <span className='line block overflow-hidden'>
@@ -96,21 +104,23 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Background Image */}
-      <Image
-        src='/images/heroBackground.png'
-        alt='background'
-        fill
-        className='object-contain object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom  brightness-105 contrast-110'
-        priority
-      />
+      {/* ✅ Wrapped Image with fade-in animation */}
+      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0'>
+        <Image
+          src='/images/heroBackground.png'
+          alt='background'
+          fill
+          className='object-contain object-bottom sm:object-right ml-26 sm:ml-7 lg:object-bottom brightness-105 contrast-110'
+          priority
+        />
+      </div>
 
       {/* Scrolling Text Animation */}
       <div className='absolute top-[calc(100vh-350px)] w-full overflow-hidden'>
-        <div ref={slider} className='relative whitespace-nowrap w-max'>
+        <div ref={slider} className='relative whitespace-nowrap w-max text-[#990000]'>
           <p
             ref={firstText}
-            className='inline-block m-0 text-[230px] font-medium pr-[50px]'
+            className='inline-block m-0  text-[230px] font-medium pr-[50px]'
           >
             Next JS Developer - Next JS Developer -
           </p>
