@@ -30,11 +30,6 @@ export const postType = defineType({
       type: 'datetime',
     }),
     defineField({
-      name: 'smallDescription',
-      type: 'string',
-      title: 'Small Description',
-    }),
-    defineField({
       name: 'body',
       type: 'array',
       of: [{type: 'block'}],

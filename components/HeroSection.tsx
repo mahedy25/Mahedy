@@ -76,7 +76,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <main className='relative flex h-screen mb-[100vh] overflow-hidden'>
+    <main className='relative flex h-screen mb-100 overflow-hidden'>
       {/* Positioned Text */}
       <div
         id='mainText'
@@ -122,13 +122,13 @@ export default function HeroSection() {
             ref={firstText}
             className='inline-block m-0  text-[230px] font-medium pr-[50px]'
           >
-            Freelance Developer - 
+            Freelance Developer - Freelance Developer - 
           </p>
           <p
             ref={secondText}
             className='inline-block m-0 text-[230px] font-medium pr-[50px]'
           >
-            Freelance Developer - 
+            Freelance Developer - Freelance Developer - 
           </p>
         </div>
       </div>

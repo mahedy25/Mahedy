@@ -1,59 +1,41 @@
-import { PortableText } from '@portabletext/react';
-import type { PortableTextBlock } from '@portabletext/types';
-import Image from 'next/image';
-import Link from 'next/link';
+import { type SanityDocument } from "next-sanity";
+import imageUrlBuilder from "@sanity/image-url";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { notFound } from 'next/navigation';
 
-import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { client } from '../sanity/client';
+import ProjectContent from "../../components/ProjectContent";
+import { client } from "../sanity/client";
 
-const builder = imageUrlBuilder(client);
+// Sanity image builder config
+const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
-  builder.image(source).width(1200).height(675).url();
+  projectId && dataset
+    ? imageUrlBuilder({ projectId, dataset }).image(source)
+    : null;
 
-const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]`;
+// Updated query to remove the smallDescription field
+const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
+  _id, title, mainImage, publishedAt, body, slug
+}`;
 
-type Project = {
-  title: string;
-  mainImage?: SanityImageSource;
-  publishedAt: string;
-  body?: PortableTextBlock[];
-};
+const options = { next: { revalidate: 30 } };
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const project = await client.fetch<SanityDocument>(PROJECT_QUERY, await params, options);
 
-export default async function ProjectPage({ params }: Props) {
-  const project: Project = await client.fetch(PROJECT_QUERY, { slug: params.slug });
+  if (!project) {
+    notFound();
+  }
 
-  if (!project) return <div>Project not found</div>;
+  const imageUrl = project.mainImage
+    ? (urlFor(project.mainImage)?.width(550).height(310).url() ?? null)
+    : null;
 
   return (
-    <main className="container mx-auto min-h-screen max-w-4xl p-8">
-      <Link href="/" className="mb-6 block text-lg font-medium hover:underline">
-        ← Back to projects
-      </Link>
-
-      {project.mainImage && (
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8 shadow-lg">
-          <Image src={urlFor(project.mainImage)} alt={project.title} fill className="object-cover" priority />
-        </div>
-      )}
-
-      <h1 className="text-5xl font-bold mb-6">{project.title}</h1>
-
-      <p className="text-gray-600 mb-8">
-        Published: {new Date(project.publishedAt).toLocaleDateString()}
-      </p>
-
-      {project.body && (
-        <article className="prose prose-lg max-w-none">
-          <PortableText value={project.body} />
-        </article>
-      )}
-    </main>
+    <ProjectContent project={project} imageUrl={imageUrl} />
   );
 }

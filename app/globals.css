@@ -8,30 +8,4 @@ html, body {
   margin: 0;    /* Remove default margins */
   padding: 0;   /* Remove default padding */
   overflow-x: hidden;
-  /* Add any other base styles you need, like font-family, color, etc. */
-}
-
-/* If you are using Next.js, also ensure the root div (#__next or #_next) spans full height */
-#__next, #_next {
-  height: 100%;
-}
-
-
-/* Your theme inline and other imports */
-@import "tailwindcss"; /* This is duplicated, remove one */
-
-@theme inline {
-  --animate-aurora: aurora 60s linear infinite;
-  @keyframes aurora {
-    from {
-      background-position:
-        50% 50%,
-        50% 50%;
-    }
-    to {
-      background-position:
-        350% 50%,
-        350% 50%;
-    }
-  }
 }
