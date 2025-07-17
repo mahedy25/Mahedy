@@ -105,7 +105,7 @@ export default function HeroSection() {
       </div>
 
       {/* ✅ Wrapped Image with fade-in animation */}
-      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0 bg-[#DFF6F0]'>
+      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0 '>
         <Image
           src='/images/heroBg.png'
           alt='background'
