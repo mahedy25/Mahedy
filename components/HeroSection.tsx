@@ -113,7 +113,7 @@ export default function HeroSection() {
           src='/images/heroBg.png'
           alt='background'
           fill
-          className='object-contain object-bottom ml-26 sm:ml-7 brightness-105 contrast-110'
+          className='object-contain object-bottom ml-26 sm:ml-35 lg:ml-0 brightness-105 contrast-110'
           priority
         />
       </div>
