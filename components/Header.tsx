@@ -94,12 +94,12 @@ export default function Header() {
                   delay: 0.7 + i * 0.1,
                 }}
                 className={`mx-4 relative font-medium text-xl transition-colors duration-300 group ${
-                  isActive ? 'text-[#990000]' : ''
+                  isActive ? 'text-[#8B0000]' : ''
                 }`}
               >
                 {navLink.name}
                 <span
-                  className={`absolute bottom-0 left-0 h-1 bg-[#990000] transition-all duration-300 ${
+                  className={`absolute bottom-0 left-0 h-1 bg-[#8B0000] transition-all duration-300 ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                 ></span>
@@ -126,28 +126,28 @@ export default function Header() {
             {
               href: 'https://github.com/mahedy25',
               icon: (
-                <Github className='w-6 h-6 mx-2 text-[#333333] hover:text-[#990000]' />
+                <Github className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
               ),
               delay: 1.6,
             },
             {
               href: 'https://linkedin.com',
               icon: (
-                <Linkedin className='w-6 h-6 mx-2 text-[#333333] hover:text-[#990000]' />
+                <Linkedin className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
               ),
               delay: 1.7,
             },
             {
               href: 'https://facebook.com',
               icon: (
-                <Facebook className='w-6 h-6 mx-2 text-[#333333] hover:text-[#990000]' />
+                <Facebook className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
               ),
               delay: 1.8,
             },
             {
               href: 'https://instagram.com',
               icon: (
-                <Instagram className='w-6 h-6 mx-2 text-[#333333] hover:text-[#990000]' />
+                <Instagram className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
               ),
               delay: 1.9,
             },
@@ -173,7 +173,7 @@ export default function Header() {
             ref={burgerRef}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMenu}
-            className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#990000] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
+            className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#8B0000] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </motion.button>
@@ -183,7 +183,7 @@ export default function Header() {
         <div className='flex md:hidden'>
           <button
             onClick={toggleMenu}
-            className='fixed top-4 right-4 z-50 bg-[#0F0F0F] hover:bg-[#990000] p-4 rounded-full text-[#DFF6F0]'
+            className='fixed top-4 right-4 z-50 bg-[#0F0F0F] hover:bg-[#8B0000] p-4 rounded-full text-[#DFF6F0]'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </button>
@@ -214,8 +214,8 @@ export default function Header() {
                       linkRefs.current[index] = el
                     }) as React.RefCallback<HTMLAnchorElement>
                   }
-                  className={`relative font-medium transition-colors hover:text-[#990000] duration-300 group ${
-                    isActive ? 'text-[#990000]' : ''
+                  className={`relative font-medium transition-colors hover:text-[#8B0000] duration-300 group ${
+                    isActive ? 'text-[#8B0000]' : ''
                   }`}
                 >
                   {navLink.name}
@@ -227,22 +227,22 @@ export default function Header() {
               {[
                 {
                   href: 'https://github.com/mahedy25',
-                  icon: <Github className='w-6 h-6 hover:text-[#990000]' />,
+                  icon: <Github className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.7,
                 },
                 {
                   href: 'https://linkedin.com',
-                  icon: <Linkedin className='w-6 h-6 hover:text-[#990000]' />,
+                  icon: <Linkedin className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.8,
                 },
                 {
                   href: 'https://facebook.com',
-                  icon: <Facebook className='w-6 h-6 hover:text-[#990000]' />,
+                  icon: <Facebook className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.9,
                 },
                 {
                   href: 'https://instagram.com',
-                  icon: <Instagram className='w-6 h-6 hover:text-[#990000]' />,
+                  icon: <Instagram className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 1,
                 },
               ].map(({ href, icon, delay }, index) => (

@@ -5,6 +5,7 @@ import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import { Lobster } from 'next/font/google'
+import { motion } from 'framer-motion'
 
 const lobster = Lobster({
   weight: '400',
@@ -81,7 +82,7 @@ export default function HeroSection() {
 }, [])
 
   return (
-    <main className='relative flex h-screen mb-[100vh] overflow-hidden'>
+    <main className='relative flex h-screen  overflow-hidden'>
       {/* Positioned Text */}
       <div
         id='mainText'
@@ -108,7 +109,11 @@ export default function HeroSection() {
       </div>
 
       {/* Image with fade-in */}
-      <div ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0'>
+      <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.2 }}
+      ref={imageContainer} className='absolute inset-0 z-0 w-full h-full opacity-0'>
         <Image
           src='/images/heroBg.png'
           alt='background'
@@ -116,13 +121,13 @@ export default function HeroSection() {
           className='object-contain object-bottom ml-26 sm:ml-35 lg:ml-0 brightness-105 contrast-110'
           priority
         />
-      </div>
+      </motion.div>
 
       {/* Scrolling Text Animation */}
       <div className='absolute top-[calc(100vh-350px)] w-full overflow-hidden'>
         <div
           ref={slider}
-          className={`${lobster.className} relative whitespace-nowrap w-max text-[#990000]`}
+          className={`${lobster.className} relative whitespace-nowrap w-max text-[#8B0000]`}
         >
           <p
             ref={firstText}
