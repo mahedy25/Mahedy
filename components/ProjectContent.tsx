@@ -31,13 +31,16 @@ export default function ProjectContent({
 }) {
   return (
     <motion.main
-      className="container mx-auto min-h-screen max-w-3xl px-8 py-16 flex flex-col items-center"
+      className="container mx-auto min-h-screen max-w-3xl px-8 py-12 md:py-16 lg:py-24 flex flex-col items-center"
       variants={containerVariants}
       initial="hidden"
       animate="show"
     >
       <motion.div variants={itemVariants} className="w-full text-left">
-        <Link href="/" className="bg-[#0EA5E9] px-4 py-3 rounded-md hover:bg-[#8B0000] font-semibold text-white transition-colors mb-8 inline-block">
+        <Link
+          href="/"
+          className="bg-[#0EA5E9] px-5 py-3 rounded-md hover:bg-[#8B0000] font-semibold text-white transition-colors mb-8 inline-block"
+        >
           ← Back to projects
         </Link>
       </motion.div>
@@ -57,7 +60,7 @@ export default function ProjectContent({
 
       <div className="w-full text-left">
         <motion.h1
-          className="text-5xl font-extrabold text-neutral-900 mb-2"
+          className="text-5xl font-extrabold text-neutral-900 mb-4 leading-tight"
           variants={itemVariants}
         >
           {project.title}
@@ -68,15 +71,15 @@ export default function ProjectContent({
         className="w-full mt-6"
         variants={itemVariants}
       >
-        <p className="text-xl text-gray-500 mb-8">
+        <p className="text-lg text-gray-600 mb-8 tracking-wide">
           Published: {new Date(project.publishedAt).toLocaleDateString()}
         </p>
 
-        {/* This divider creates a clean separation */}
-        <hr className="my-10 border-t border-gray-200" />
-        
+        {/* Divider */}
+        <hr className="my-10 border-t border-gray-300" />
+
         {Array.isArray(project.body) && (
-          <div>
+          <div className="prose max-w-none text-gray-800">
             <PortableText value={project.body} components={portableTextComponents} />
           </div>
         )}

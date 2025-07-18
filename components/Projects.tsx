@@ -147,24 +147,30 @@ export default function Projects() {
   }, [])
 
   return (
-    <main className='relative flex min-h-screen items-center justify-center overflow-hidden'>
-      <div className='z-10 w-300 flex flex-col items-center justify-center'>
-        <h1 className='text-4xl font-extrabold py-12 mb-4 text-[#8B0000]'>Projects</h1>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-8">
+      <div className="z-10 max-w-4xl w-full flex flex-col items-center justify-center">
+        <h1 className="headline">
+          Projects
+        </h1>
         {projects.map((project, index) => (
           <div
             key={project._id}
             data-project-index={index}
-            className='group w-full flex cursor-pointer items-center justify-between gap-4 border-t border-[#8B0000] py-10 px-10 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-50'
+            className="group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-10 px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70"
           >
             <h2
               data-project-index={index}
-              className={`m-0 text-xl sm:text-3xl md:text-4xl lg:text-6xl font-normal duration-400 group-hover:-translate-x-3 transition-all ${hoveredIndex === index ? 'text-[#8B0000]' : ''}`}
+              className={`m-0 text-xl sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
+                hoveredIndex === index ? 'text-[#8B0000]' : ''
+              }`}
             >
               {project.title}
             </h2>
             <p
               data-project-index={index}
-              className={`font-light  duration-400 group-hover:translate-x-3 transition-all ${hoveredIndex === index ? 'text-[#8B0000]' : ''}`}
+              className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
+                hoveredIndex === index ? 'text-[#8B0000]' : ''
+              }`}
             >
               Design & Development
             </p>
@@ -176,18 +182,21 @@ export default function Projects() {
       <motion.div
         ref={modalRef}
         variants={scaleAnimation}
-        initial='initial'
+        initial="initial"
         animate={hoveredIndex !== null ? 'enter' : 'closed'}
-        className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md'
+        className="fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg"
       >
         <div
-          className={`h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]`}
+          className="h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"
           style={{ transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)` }}
         >
           {projects.map((project, i) => (
             <div
               key={project._id}
-              className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(i, project.color)}`}
+              className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(
+                i,
+                project.color
+              )}`}
             >
               <Image
                 src={urlFor(project.mainImage)?.url() || ''}
@@ -195,26 +204,23 @@ export default function Projects() {
                 width={300}
                 height={0}
                 draggable={false}
-                className='object-cover h-full w-full'
+                className="object-cover h-full w-full rounded-md"
               />
             </div>
           ))}
         </div>
       </motion.div>
 
-      {/* FOLLOWING VIEW BUTTON (Always Rendered) */}
+      {/* FOLLOWING VIEW BUTTON */}
       <div
         ref={cursorLabelRef}
-        className={`fixed z-[101] transition-opacity duration-200 pointer-events-none ${
+        className={`fixed z-[101] transition-opacity duration-200 pointer-events-none select-none ${
           hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
         }`}
       >
         {hoveredIndex !== null && projects[hoveredIndex] && (
-          <Link
-            href={`/${projects[hoveredIndex].slug.current}`}
-            className='pointer-events-auto'
-          >
-            <span className='inline-block px-4 py-6 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-medium transition-transform duration-200 hover:scale-105'>
+          <Link href={`/${projects[hoveredIndex].slug.current}`} className="pointer-events-auto">
+            <span className="inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105">
               View
             </span>
           </Link>

@@ -7,55 +7,23 @@ import * as React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export default function Header() {
   const pathName = usePathname()
   const [open, setOpen] = React.useState(false)
   const toggleMenu = () => setOpen((prev) => !prev)
 
-  const burgerRef = React.useRef<HTMLButtonElement>(null)
   const linkRefs = React.useRef<(HTMLAnchorElement | null)[]>([])
   const sidebarRef = React.useRef(null)
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Works', href: '/works' },
-    { name: 'About', href: '/about' },
+    { name: 'My Work', href: '/works' },
+    { name: 'About Me', href: '/about' },
   ]
 
-  // GSAP: Show burger button on scroll
-  useGSAP(() => {
-    if (!burgerRef.current) return
-
-    gsap.set(burgerRef.current, { scale: 0, visibility: 'hidden' })
-
-    ScrollTrigger.create({
-      start: 'top -110',
-      onEnter: () =>
-        gsap.to(burgerRef.current, {
-          scale: 1,
-          visibility: 'visible',
-          duration: 0.3,
-          ease: 'back.out(0.7)',
-        }),
-      onLeaveBack: () =>
-        gsap.to(burgerRef.current, {
-          scale: 0,
-          visibility: 'hidden',
-          duration: 0.3,
-          ease: 'back.in(2.7)',
-        }),
-    })
-  }, [])
-
-  // GSAP: Animate sidebar links on open (desktop only)
-  useGSAP(() => {
-    if (!open || typeof window === 'undefined' || window.innerWidth < 768)
-      return
+  React.useEffect(() => {
+    if (!open || typeof window === 'undefined' || window.innerWidth < 768) return
 
     if (linkRefs.current.length > 0) {
       gsap.from(linkRefs.current, {
@@ -69,115 +37,23 @@ export default function Header() {
   }, [open])
 
   return (
-    <main>
+    <main className='bg-[#C4C4C4] text-[#333333]'>
       {/* Header Section */}
-      <div className='flex  justify-between items-center py-4 px-4 md:px-8 '>
+      <div className='flex justify-between items-center py-4 px-4 md:px-8 lg:px-16'>
         {/* Logo */}
-        <div>
-          <Logo />
-        </div>
+        <Logo />
 
-        {/* Nav Links (Desktop) */}
-        <div className='hidden md:flex'>
-          {navLinks.map((navLink, i) => {
-            const isActive = pathName === navLink.href
-            return (
-              <motion.a
-                key={navLink.name}
-                href={navLink.href}
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 200,
-                  damping: 20,
-                  delay: 0.7 + i * 0.1,
-                }}
-                className={`mx-4 relative font-medium text-xl transition-colors duration-300 group ${
-                  isActive ? 'text-[#8B0000]' : ''
-                }`}
-              >
-                {navLink.name}
-                <span
-                  className={`absolute bottom-0 left-0 h-1 bg-[#8B0000] transition-all duration-300 ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                ></span>
-              </motion.a>
-            )
-          })}
-        </div>
+        {/* Desktop Nav Links Removed */}
+        <div className='hidden md:flex'></div>
 
-        {/* Social Icons + Desktop Burger Button */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: 'spring',
-            stiffness: 200,
-            damping: 25,
-            delay: 1,
-            duration: 2,
-          }}
-          className='hidden md:flex items-center  transition-colors duration-300'
+        {/* Burger Button (Desktop) */}
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleMenu}
+          className='ml-4 fixed top-4 right-8 bg-[#0F0F0F] hover:bg-[#8B0000] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 z-50 cursor-pointer hidden md:flex'
         >
-          {/* Animated Social Icons */}
-          {[
-            {
-              href: 'https://github.com/mahedy25',
-              icon: (
-                <Github className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
-              ),
-              delay: 1.6,
-            },
-            {
-              href: 'https://linkedin.com',
-              icon: (
-                <Linkedin className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
-              ),
-              delay: 1.7,
-            },
-            {
-              href: 'https://facebook.com',
-              icon: (
-                <Facebook className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
-              ),
-              delay: 1.8,
-            },
-            {
-              href: 'https://instagram.com',
-              icon: (
-                <Instagram className='w-6 h-6 mx-2 text-[#333333] hover:text-[#8B0000]' />
-              ),
-              delay: 1.9,
-            },
-          ].map(({ href, icon, delay }, index) => (
-            <motion.div
-              key={index}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                type: 'spring',
-                stiffness: 200,
-                damping: 25,
-                delay,
-                duration: 1.2,
-              }}
-            >
-              <Link href={href}>{icon}</Link>
-            </motion.div>
-          ))}
-
-          {/* Animated Burger Button */}
-          <motion.button
-            ref={burgerRef}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMenu}
-            className='fixed md:ml-25 md:mt-10 right-6 bg-[#0F0F0F] hover:bg-[#8B0000] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 invisible scale-0 z-50 cursor-pointer'
-          >
-            {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
-          </motion.button>
-        </motion.div>
+          {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
+        </motion.button>
 
         {/* Mobile Burger Button */}
         <div className='flex md:hidden'>
@@ -190,7 +66,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Sidebar Overlay */}
+      {/* Sidebar */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -200,7 +76,7 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-6xl text-3xl z-40'
+            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-5xl text-2xl font-semibold z-40 tracking-widest'
           >
             {navLinks.map((navLink, index) => {
               const isActive = pathName === navLink.href
@@ -209,12 +85,10 @@ export default function Header() {
                   key={navLink.name}
                   href={navLink.href}
                   onClick={toggleMenu}
-                  ref={
-                    ((el: HTMLAnchorElement | null) => {
-                      linkRefs.current[index] = el
-                    }) as React.RefCallback<HTMLAnchorElement>
-                  }
-                  className={`relative font-medium transition-colors hover:text-[#8B0000] duration-300 group ${
+                  ref={((el) => {
+                    linkRefs.current[index] = el
+                  }) as React.RefCallback<HTMLAnchorElement>}
+                  className={`uppercase transition-colors duration-300 hover:text-[#8B0000] ${
                     isActive ? 'text-[#8B0000]' : ''
                   }`}
                 >
@@ -223,29 +97,34 @@ export default function Header() {
               )
             })}
 
+            {/* Sidebar Social Icons */}
             <div className='pt-8 border-t-2 border-white w-50 flex justify-center gap-6'>
               {[
                 {
                   href: 'https://github.com/mahedy25',
                   icon: <Github className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.7,
+                  label: 'GitHub',
                 },
                 {
                   href: 'https://linkedin.com',
                   icon: <Linkedin className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.8,
+                  label: 'LinkedIn',
                 },
                 {
                   href: 'https://facebook.com',
                   icon: <Facebook className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 0.9,
+                  label: 'Facebook',
                 },
                 {
                   href: 'https://instagram.com',
                   icon: <Instagram className='w-6 h-6 hover:text-[#8B0000]' />,
                   delay: 1,
+                  label: 'Instagram',
                 },
-              ].map(({ href, icon, delay }, index) => (
+              ].map(({ href, icon, delay, label }, index) => (
                 <motion.div
                   key={index}
                   initial={{ scale: 0, opacity: 0 }}
@@ -255,10 +134,12 @@ export default function Header() {
                     stiffness: 200,
                     damping: 25,
                     delay,
-                    duration: 5,
+                    duration: 1.2,
                   }}
                 >
-                  <Link href={href}>{icon}</Link>
+                  <Link href={href} aria-label={`Follow on ${label}`}>
+                    {icon}
+                  </Link>
                 </motion.div>
               ))}
             </div>
