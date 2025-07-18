@@ -4,18 +4,15 @@ import HeroSection from '@/components/HeroSection'
 import Header from '../components/Header'
 import LiveTime from '@/components/LiveTime'
 import Works from '@/components/works'
-
-
+import ServiceSummary from '@/components/ServiceSummary'
 
 export default function Home() {
   return (
     <main>
       <Header />
       <HeroSection />
-
-      {/* --- RENDER YOUR WORKS COMPONENT HERE --- */}
-      <Works/>
-
+      <ServiceSummary />
+      <Works />
       <LiveTime />
     </main>
   )
