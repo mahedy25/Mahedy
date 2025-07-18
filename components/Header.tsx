@@ -18,7 +18,7 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'My Work', href: '/works' },
+    { name: 'My Work', href: '#works' },
     { name: 'About Me', href: '/about' },
   ]
 
@@ -89,7 +89,7 @@ export default function Header() {
                     linkRefs.current[index] = el
                   }) as React.RefCallback<HTMLAnchorElement>}
                   className={`uppercase transition-colors duration-300 hover:text-[#8B0000] ${
-                    isActive ? 'text-[#8B0000]' : ''
+                    isActive ? '' : ''
                   }`}
                 >
                   {navLink.name}

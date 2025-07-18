@@ -1,17 +1,22 @@
+'use client' // This is required if you use any client-side hooks in your other components
+
 import HeroSection from '@/components/HeroSection'
 import Header from '../components/Header'
-
 import LiveTime from '@/components/LiveTime'
-import Projects from '@/components/Projects'
+import Works from '@/components/works'
+
+
 
 export default function Home() {
   return (
-    <main className=''>
+    <main>
       <Header />
       <HeroSection />
-     <Projects />
-    <LiveTime />
-    
+
+      {/* --- RENDER YOUR WORKS COMPONENT HERE --- */}
+      <Works/>
+
+      <LiveTime />
     </main>
   )
 }

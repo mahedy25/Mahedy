@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins } from 'next/font/google'
 
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -32,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#161616] text-[#F8F9FA]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#F5F5F5] text-[#333333] scroll-smooth`}
       >
         <div className='h-full w-full '>
           {children}

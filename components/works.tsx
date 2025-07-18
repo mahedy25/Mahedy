@@ -53,7 +53,7 @@ const getBgColorClass = (index: number, projectColor?: string): string => {
   }
 }
 
-export default function Projects() {
+export default function Works() {
   const [projects, setProjects] = useState<Project[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
