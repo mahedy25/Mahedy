@@ -1,7 +1,9 @@
 
 
-import Header from '../components/Header'
+
 import HeroSection from '@/components/HeroSection'
+import Header from '../components/Header'
+
 import LiveTime from '@/components/LiveTime'
 import Projects from '@/components/Projects'
 

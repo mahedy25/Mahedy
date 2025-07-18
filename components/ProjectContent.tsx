@@ -37,7 +37,7 @@ export default function ProjectContent({
       animate="show"
     >
       <motion.div variants={itemVariants} className="w-full text-left">
-        <Link href="/" className="bg-[#00FFFF] px-4 py-3 rounded-md hover:bg-[#990000] font-semibold hover:text-white transition-colors mb-8 inline-block">
+        <Link href="/" className="bg-[#E3C565] px-4 py-3 rounded-md hover:bg-[#990000] font-semibold text-white transition-colors mb-8 inline-block">
           ← Back to projects
         </Link>
       </motion.div>
