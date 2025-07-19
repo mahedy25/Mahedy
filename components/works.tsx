@@ -244,7 +244,7 @@ export default function Works() {
                     width={300}
                     height={0}
                     draggable={false}
-                    className='object-cover h-full w-full rounded-md'
+                    className='object-contain h-full w-full rounded-md'
                   />
                 </div>
               ))}
