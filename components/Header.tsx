@@ -18,7 +18,7 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'My Work', href: '#works' },
+    { name: 'My Work', href: '/works' },
     { name: 'About Me', href: '/about' },
   ]
 
@@ -37,7 +37,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <main className='bg-[#9CA3AF] '>
+    <main className='bg-[#ECECEC] '>
       {/* Header Section */}
       <div className='flex justify-between items-center py-4 px-4 md:px-8 lg:px-16'>
         {/* Logo */}

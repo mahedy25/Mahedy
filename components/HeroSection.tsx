@@ -4,14 +4,15 @@ import Image from 'next/image'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
-import { Lobster_Two } from 'next/font/google'
 import { motion } from 'framer-motion'
+
+import { Lobster_Two } from 'next/font/google'
+
 
 const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],
 })
-
 
 export default function HeroSection() {
   const firstText = useRef<HTMLParagraphElement | null>(null)
@@ -78,25 +79,28 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <main className="relative flex h-screen overflow-hidden bg-[#9CA3AF]  ">
+    <main className='relative flex h-screen overflow-hidden bg-[#ECECEC]  '>
       {/* Positioned Text */}
       <div
-        id="mainText"
-        className="absolute top-[25%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left"
+        id='mainText'
+        className='absolute top-[25%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left'
       >
         <h1
-          className={`${lobster.className}  w-[300px] sm:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-bold`}
+          className={`${lobster.className}  w-[250px] sm:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-bold`}
         >
-          <span className="line block overflow-hidden">
-            <span className="inline-block">Next.JS</span>
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>Full Stack Next JS </span>
           </span>
-          <span className="line block overflow-hidden">
-            <span className="inline-block">Front-end web developer</span>
+          <span className='line block overflow-hidden'>
+            <span className='inline-block'>Web Developer & Designer</span>
           </span>
         </h1>
-        <div className="mt-2 w-[60%] md:w-full md:text-xl text-[#004D4D] font-semibold lg:text-2xl  leading-snug">
-          <span className="line block overflow-hidden">
-            <span className="inline-block">— Based In Bangladesh.</span>
+        <div className='mt-6  md:w-full md:text-xl text-[#004D4D] font-semibold lg:text-2xl  leading-snug'>
+          <span className='line block overflow-hidden'>
+            <span className='w-0 h-1 border-2 mx-1 md:mx-2 lg:mx-4 border-[#004D4D]'></span>
+            <span className='inline-block '>
+              Based In Bangladesh.
+            </span>
           </span>
         </div>
       </div>
@@ -107,34 +111,34 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
         ref={imageContainer}
-        className="absolute ml-26 sm:ml-35 md:ml-50 lg:ml-80 inset-0 z-0 w-full h-full opacity-0"
+        className='absolute ml-29 md:ml-50 lg:ml-80 inset-0 z-0 w-full h-full opacity-0'
       >
         <Image
-          src="/images/heroBg.png"
-          alt="background"
+          src='/images/heroBg.png'
+          alt='background'
           fill
-          className="object-contain object-bottom  brightness-105 "
+          className='object-contain object-bottom  brightness-105 '
           priority
         />
       </motion.div>
 
       {/* Scrolling Text Animation */}
-      <div className="absolute top-[calc(100vh-350px)] w-full overflow-hidden">
+      <div className='absolute top-[calc(100vh-350px)] w-full overflow-hidden'>
         <div
           ref={slider}
           className={` relative whitespace-nowrap w-max text-[#FFFFFF]`}
         >
           <p
             ref={firstText}
-            className="inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px]"
+            className='inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px]'
           >
-            Freelance Developer - 
+            Freelance Developer -
           </p>
           <p
             ref={secondText}
-            className="inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px] absolute left-full top-0"
+            className='inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px] absolute left-full top-0'
           >
-            Freelance Developer - 
+            Freelance Developer -
           </p>
         </div>
       </div>

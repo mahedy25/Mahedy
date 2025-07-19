@@ -276,7 +276,7 @@ export default function Works() {
       )}
     </main>
     <div className='py-15 w-full flex items-center justify-center'>
-      <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer text-white px-5 py-4 rounded-full font-semibold'>
+      <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300  text-white px-5 py-4 rounded-full font-semibold'>
         See More Work
       </button>
     </div>

@@ -5,11 +5,11 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Lobster_Two } from 'next/font/google'
+import { Fugaz_One } from 'next/font/google'
 
-const lobster = Lobster_Two({ 
-  weight: '400', 
-  subsets: ['latin'] 
+const lobster = Fugaz_One({
+  weight: '400',
+  subsets: ['latin'],
 })
 
 export default function Logo() {
@@ -62,7 +62,7 @@ export default function Logo() {
                 gap: '4px',
               }}
             >
-              <span>Coded by -</span>
+              <span>Coded -</span>
               <span>Mahedy</span>
             </motion.div>
 
