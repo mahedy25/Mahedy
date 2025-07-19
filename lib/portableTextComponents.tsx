@@ -5,11 +5,21 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 export const portableTextComponents: PortableTextComponents = {
   block: {
-    h1: ({ children }) => <h1 className="text-4xl font-extrabold mt-12 mb-4 text-neutral-900">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-3xl font-bold mt-10 mb-3 text-neutral-900">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-2xl font-bold mt-8 mb-2 text-neutral-900">{children}</h3>,
-    h4: ({ children }) => <h4 className="text-xl font-bold mt-6 mb-1 text-neutral-900">{children}</h4>,
-    normal: ({ children }) => <p className="text-lg leading-relaxed text-[#333333] mb-6">{children}</p>,
+    h1: ({ children }) => (
+      <h1 className="text-3xl sm:text-4xl font-bold mt-10 mb-4 text-neutral-900">{children}</h1>
+    ),
+    h2: ({ children }) => (
+      <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-3 text-neutral-900">{children}</h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="text-xl sm:text-2xl font-medium mt-6 mb-2 text-neutral-900">{children}</h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="text-lg sm:text-xl font-medium mt-4 mb-2 text-neutral-900">{children}</h4>
+    ),
+    normal: ({ children }) => (
+      <p className="text-base sm:text-lg leading-relaxed text-gray-800 mb-6">{children}</p>
+    ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-gray-300 pl-6 py-4 my-8 bg-gray-50 rounded-r-md italic text-gray-700">
         {children}
@@ -17,8 +27,12 @@ export const portableTextComponents: PortableTextComponents = {
     ),
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc list-inside space-y-2 text-lg text-[#333333] mb-6">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal list-inside space-y-2 text-lg text-[#333333] mb-6">{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-800 mb-6">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal list-inside space-y-2 text-base sm:text-lg text-gray-800 mb-6">{children}</ol>
+    ),
   },
   listItem: {
     bullet: ({ children }) => <li>{children}</li>,
@@ -28,21 +42,29 @@ export const portableTextComponents: PortableTextComponents = {
     link: ({ children, value }) => {
       const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined;
       return (
-        <a href={value.href} rel={rel} className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+        <a
+          href={value.href}
+          rel={rel}
+          className="text-blue-600 hover:underline transition-colors"
+        >
           {children}
         </a>
       );
     },
-    strong: ({ children }) => <strong className="font-extrabold text-[#990000]">{children}</strong>,
-    em: ({ children }) => <em className="italic">{children}</em>,
-    code: ({ children }) => <code className="bg-gray-100 text-red-600 px-2 py-1 rounded text-sm font-mono">{children}</code>,
+    strong: ({ children }) => <span>{children}</span>, // Removed bold styling
+    em: ({ children }) => <em className="italic text-gray-700">{children}</em>,
+    code: ({ children }) => (
+      <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono">
+        {children}
+      </code>
+    ),
   },
   types: {
     image: ({ value }) => {
       const imageUrl = urlFor(value as SanityImageSource)?.width(800).url();
       if (!imageUrl) return null;
       return (
-        <figure className="my-12">
+        <figure className="my-10">
           <Image
             src={imageUrl}
             alt={value.alt || 'Project image'}
