@@ -8,6 +8,12 @@ import { urlFor } from '@/sanity/lib/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Variants, motion } from 'framer-motion'
 import gsap from 'gsap'
+import { Lobster_Two } from 'next/font/google'
+
+const lobster = Lobster_Two({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 type Project = {
   _id: string
@@ -58,7 +64,6 @@ export default function Works() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   const hoveredIndexRef = useRef<number | null>(null)
-
   const modalRef = useRef<HTMLDivElement>(null)
   const cursorLabelRef = useRef<HTMLDivElement>(null)
 
@@ -147,16 +152,22 @@ export default function Works() {
   }, [])
 
   return (
-    <main id='works' className="relative flex min-h-screen items-center justify-center overflow-hidden px-8">
-      <div className="z-10 max-w-4xl w-full flex flex-col items-center justify-center">
-        <h1 className="headline">
-          Projects
+    <main
+      id='works'
+      className='relative flex min-h-screen items-center justify-center overflow-hidden px-8'
+    >
+      <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
+        <h1
+          className={`mb-10 ${lobster.className} text-4xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl`}
+        >
+          My Works
         </h1>
+
         {projects.map((project, index) => (
           <div
             key={project._id}
             data-project-index={index}
-            className="group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-10 px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70"
+            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-10 px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70'
           >
             <h2
               data-project-index={index}
@@ -172,7 +183,7 @@ export default function Works() {
                 hoveredIndex === index ? 'text-[#8B0000]' : ''
               }`}
             >
-              Design & Development
+              Design + Development
             </p>
           </div>
         ))}
@@ -182,13 +193,15 @@ export default function Works() {
       <motion.div
         ref={modalRef}
         variants={scaleAnimation}
-        initial="initial"
+        initial='initial'
         animate={hoveredIndex !== null ? 'enter' : 'closed'}
-        className="fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg"
+        className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg'
       >
         <div
-          className="h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"
-          style={{ transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)` }}
+          className='h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]'
+          style={{
+            transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)`,
+          }}
         >
           {projects.map((project, i) => (
             <div
@@ -204,7 +217,7 @@ export default function Works() {
                 width={300}
                 height={0}
                 draggable={false}
-                className="object-cover h-full w-full rounded-md"
+                className='object-cover h-full w-full rounded-md'
               />
             </div>
           ))}
@@ -219,8 +232,11 @@ export default function Works() {
         }`}
       >
         {hoveredIndex !== null && projects[hoveredIndex] && (
-          <Link href={`/${projects[hoveredIndex].slug.current}`} className="pointer-events-auto">
-            <span className="inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105">
+          <Link
+            href={`/${projects[hoveredIndex].slug.current}`}
+            className='pointer-events-auto'
+          >
+            <span className='inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
               View
             </span>
           </Link>

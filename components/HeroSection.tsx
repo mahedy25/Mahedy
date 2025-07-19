@@ -4,13 +4,14 @@ import Image from 'next/image'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
-import { Lobster } from 'next/font/google'
+import { Lobster_Two } from 'next/font/google'
 import { motion } from 'framer-motion'
 
-const lobster = Lobster({
+const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],
 })
+
 
 export default function HeroSection() {
   const firstText = useRef<HTMLParagraphElement | null>(null)
@@ -84,7 +85,7 @@ export default function HeroSection() {
         className="absolute top-[25%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left"
       >
         <h1
-          className={`${lobster.className} w-[300px] md:w-full text-4xl md:text-5xl lg:text-7xl leading-snug font-extrabold`}
+          className={`${lobster.className} w-[300px] sm:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-semibold`}
         >
           <span className="line block overflow-hidden">
             <span className="inline-block">Next.JS</span>
@@ -94,11 +95,6 @@ export default function HeroSection() {
           </span>
         </h1>
         <div className="mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl text-[#990000] leading-snug">
-          <span className="line block overflow-hidden">
-            <span className="inline-block">
-              Create Beautiful, Functional, and Fast websites
-            </span>
-          </span>
           <span className="line block overflow-hidden">
             <span className="inline-block">— Based In Bangladesh.</span>
           </span>

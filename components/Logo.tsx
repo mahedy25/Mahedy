@@ -1,12 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { Lobster } from 'next/font/google'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import { Lobster_Two } from 'next/font/google'
 
-const lobster = Lobster({ 
+const lobster = Lobster_Two({ 
   weight: '400', 
   subsets: ['latin'] 
 })

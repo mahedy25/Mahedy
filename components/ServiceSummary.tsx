@@ -61,16 +61,16 @@ export default function ServiceSummary() {
   {/* Second Row */}
   <div className="service-item-container flex items-center justify-center gap-3 mt-4 md:mt-6">
     <p className="service-item font-normal text-2xl md:text-3xl lg:text-5xl">Innovative</p>
-    <div className="divider w-10 h-0.5 md:w-20 bg-amber-300" />
+    <div className="divider w-10 h-0.5 md:w-20 bg-[#8B0000]" />
     <p className="service-item text-2xl md:text-3xl lg:text-5xl">Responsive</p>
   </div>
 
   {/* Third Row */}
   <div className="service-item-container flex items-center justify-center gap-3 mt-4 md:mt-6">
     <p className="service-item text-xl md:text-2xl lg:text-4xl">Dynamic</p>
-    <div className="divider w-10 h-0.5 md:w-20 bg-amber-300" />
+    <div className="divider w-10 h-0.5 md:w-20 bg-[#8B0000]" />
     <p className="service-item italic text-xl md:text-2xl lg:text-4xl">Efficient</p>
-    <div className="divider w-10 h-0.5 md:w-20 bg-amber-300" />
+    <div className="divider w-10 h-0.5 md:w-20 bg-[#8B0000]" />
     <p className="service-item text-xl md:text-2xl lg:text-4xl">Pixel-perfect</p>
   </div>
 

@@ -10,38 +10,5 @@ html, body {
   overflow-x: hidden;
 }
 
-/* headline.css */
 
-/* Base headline style */
-.headline {
-  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: clamp(1.8rem, 5vw, 3.5rem);
-  background: linear-gradient(270deg, #8B0000, #0EA5E9, #8B0000);
-  background-size: 600% 600%;
-
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 8s ease infinite;
-  text-shadow: 0 2px 8px rgba(101, 65, 245, 0.2);
-  user-select: none;
-  margin: 0.5em 0;
-  line-height: 1.2;
-}
-
-/* Animation keyframes for smooth gradient movement */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
