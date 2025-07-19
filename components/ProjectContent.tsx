@@ -42,7 +42,7 @@ export default function ProjectContent({
       <motion.div variants={itemVariants} className='w-full mb-6 sm:mb-8'>
         <Link
           href='/'
-          className='inline-block bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm sm:text-base px-4 sm:px-5 py-2.5 sm:py-3 rounded-md transition-colors'
+          className='inline-block bg-[#14B8A6] text-white font-medium text-sm sm:text-base px-4 sm:px-5 py-2.5 sm:py-3 rounded-md transition-colors'
         >
           ← Back to projects
         </Link>

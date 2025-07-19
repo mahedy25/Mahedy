@@ -75,7 +75,7 @@ export default function Description() {
   return (
     <div
       ref={containerRef}
-      className="mt-20 sm:mt-24 md:mt-32 lg:mt-40 px-5 md:px-[100px] flex justify-center"
+      className="py-20 sm:py-24 md:py-32 lg:py-40 px-5 md:px-[100px] flex justify-center"
     >
       <div className="max-w-[1400px] w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
         {/* Left Text Section */}
@@ -105,7 +105,7 @@ export default function Description() {
           >
             <button
               ref={buttonRef}
-              className="absolute w-[150px] h-[150px] text-sm text-white bg-black hover:bg-[#990000] transition-all duration-300 ease-out rounded-full flex items-center justify-center cursor-pointer"
+              className="absolute w-[150px] h-[150px] text-sm text-white bg-[#004D4D] hover:bg-[#800020] transition-all duration-300 ease-out rounded-full flex items-center justify-center cursor-pointer"
             >
               About Me
             </button>

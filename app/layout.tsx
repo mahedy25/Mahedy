@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#F5F5F5] text-[#333333] scroll-smooth`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#FFFFFF] text-[#333333] scroll-smooth`}
       >
         <div className='h-full w-full '>
           {children}

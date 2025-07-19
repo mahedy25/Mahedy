@@ -156,12 +156,12 @@ export default function Projects() {
           <div
             key={project._id}
             data-project-index={index}
-            className="group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-10 px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70"
+            className="group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#004D4D] py-10 px-6 transition-all duration-200 last:border-b last:border-[#004D4D] hover:opacity-70"
           >
             <h2
               data-project-index={index}
               className={`m-0 text-xl sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
-                hoveredIndex === index ? 'text-[#8B0000]' : ''
+                hoveredIndex === index ? 'text-[#004D4D]' : ''
               }`}
             >
               {project.title}
@@ -169,7 +169,7 @@ export default function Projects() {
             <p
               data-project-index={index}
               className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
-                hoveredIndex === index ? 'text-[#8B0000]' : ''
+                hoveredIndex === index ? 'text-[#004D4D]' : ''
               }`}
             >
               Design & Development
@@ -220,7 +220,7 @@ export default function Projects() {
       >
         {hoveredIndex !== null && projects[hoveredIndex] && (
           <Link href={`/${projects[hoveredIndex].slug.current}`} className="pointer-events-auto">
-            <span className="inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105">
+            <span className="inline-block px-5 py-7 bg-[#004D4D] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105">
               View
             </span>
           </Link>

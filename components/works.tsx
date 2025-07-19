@@ -11,6 +11,8 @@ import gsap from 'gsap'
 import { Lobster_Two } from 'next/font/google'
 import { ArrowUpRight } from 'lucide-react'
 
+
+
 const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],
@@ -167,6 +169,7 @@ export default function Works() {
   }, [])
 
   return (
+    <>
     <main
       id='works'
       className='relative flex mt-20 sm:mt-24 md:mt-32 lg:mt-40  items-center justify-center overflow-hidden px-4 sm:px-8 '
@@ -182,12 +185,12 @@ export default function Works() {
           <div
             key={project._id}
             data-project-index={index}
-            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-5 sm:py-8 md:py-10 px-2 sm:px-4 md:px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70'
+            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#004D4D] py-5 sm:py-8 md:py-10 px-2 sm:px-4 md:px-6 transition-all duration-200 last:border-b last:border-[#004D4D] hover:opacity-70'
           >
             <h2
               data-project-index={index}
               className={`m-0 text-normal sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
-                hoveredIndex === index ? 'text-[#8B0000]' : ''
+                hoveredIndex === index ? 'text-[#004D4D]' : ''
               }`}
             >
               {project.title}
@@ -195,7 +198,7 @@ export default function Works() {
 
             {isMobile ? (
               <Link href={`/${project.slug.current}`}>
-                <span className="text-[#8B0000] text-base sm:text-lg font-medium flex items-center gap-1">
+                <span className="text-[#004D4D] text-base sm:text-lg font-medium flex items-center gap-1">
                   View
                   <ArrowUpRight size={16} />
                 </span>
@@ -204,7 +207,7 @@ export default function Works() {
               <p
                 data-project-index={index}
                 className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
-                  hoveredIndex === index ? 'text-[#8B0000]' : ''
+                  hoveredIndex === index ? 'text-[#004D4D]' : ''
                 }`}
               >
                 Design + Development
@@ -263,7 +266,7 @@ export default function Works() {
                 href={`/${projects[hoveredIndex].slug.current}`}
                 className='pointer-events-auto'
               >
-                <span className='inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
+                <span className='inline-block px-5 py-7 bg-[#004D4D] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
                   view
                 </span>
               </Link>
@@ -272,5 +275,11 @@ export default function Works() {
         </>
       )}
     </main>
+    <div className='py-15 w-full flex items-center justify-center'>
+      <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer text-white px-5 py-4 rounded-full font-semibold'>
+        See More Work
+      </button>
+    </div>
+    </>
   )
 }

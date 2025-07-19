@@ -37,7 +37,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <main className='bg-[#C4C4C4] text-[#333333]'>
+    <main className='bg-[#9CA3AF] '>
       {/* Header Section */}
       <div className='flex justify-between items-center py-4 px-4 md:px-8 lg:px-16'>
         {/* Logo */}
@@ -50,7 +50,7 @@ export default function Header() {
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={toggleMenu}
-          className='ml-4 fixed top-4 right-8 bg-[#0F0F0F] hover:bg-[#8B0000] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 z-50 cursor-pointer hidden md:flex'
+          className='ml-4 fixed top-4 right-8 bg-[#004D4D] hover:bg-[#800020] p-6 rounded-full text-[#DFF6F0] transition-colors duration-300 z-50 cursor-pointer hidden md:flex'
         >
           {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
         </motion.button>
@@ -59,7 +59,7 @@ export default function Header() {
         <div className='flex md:hidden'>
           <button
             onClick={toggleMenu}
-            className='fixed top-4 right-4 z-50 bg-[#0F0F0F] hover:bg-[#8B0000] p-4 rounded-full text-[#DFF6F0]'
+            className='fixed top-4 right-4 z-50 bg-[#0F0F0F] hover:bg-[#004D4D] p-4 rounded-full text-[#DFF6F0]'
           >
             {open ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
           </button>
@@ -88,8 +88,8 @@ export default function Header() {
                   ref={((el) => {
                     linkRefs.current[index] = el
                   }) as React.RefCallback<HTMLAnchorElement>}
-                  className={`uppercase transition-colors duration-300 hover:text-[#8B0000] ${
-                    isActive ? '' : ''
+                  className={`uppercase transition-colors duration-300 hover:text-[#004D4D] ${
+                    isActive ? 'text-[#004D4D]' : ''
                   }`}
                 >
                   {navLink.name}
@@ -102,25 +102,25 @@ export default function Header() {
               {[
                 {
                   href: 'https://github.com/mahedy25',
-                  icon: <Github className='w-6 h-6 hover:text-[#8B0000]' />,
+                  icon: <Github className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 0.7,
                   label: 'GitHub',
                 },
                 {
                   href: 'https://linkedin.com',
-                  icon: <Linkedin className='w-6 h-6 hover:text-[#8B0000]' />,
+                  icon: <Linkedin className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 0.8,
                   label: 'LinkedIn',
                 },
                 {
                   href: 'https://facebook.com',
-                  icon: <Facebook className='w-6 h-6 hover:text-[#8B0000]' />,
+                  icon: <Facebook className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 0.9,
                   label: 'Facebook',
                 },
                 {
                   href: 'https://instagram.com',
-                  icon: <Instagram className='w-6 h-6 hover:text-[#8B0000]' />,
+                  icon: <Instagram className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 1,
                   label: 'Instagram',
                 },

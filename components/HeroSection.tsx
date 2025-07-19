@@ -78,14 +78,14 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <main className="relative flex h-screen overflow-hidden bg-[#C4C4C4] text-[#333333]">
+    <main className="relative flex h-screen overflow-hidden bg-[#9CA3AF]  ">
       {/* Positioned Text */}
       <div
         id="mainText"
         className="absolute top-[25%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left"
       >
         <h1
-          className={`${lobster.className} w-[300px] sm:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-semibold`}
+          className={`${lobster.className}  w-[300px] sm:w-full  text-4xl md:text-5xl lg:text-7xl leading-snug font-bold`}
         >
           <span className="line block overflow-hidden">
             <span className="inline-block">Next.JS</span>
@@ -94,7 +94,7 @@ export default function HeroSection() {
             <span className="inline-block">Front-end web developer</span>
           </span>
         </h1>
-        <div className="mt-2 w-[60%] md:w-full md:text-xl font-semibold lg:text-2xl text-[#990000] leading-snug">
+        <div className="mt-2 w-[60%] md:w-full md:text-xl text-[#004D4D] font-semibold lg:text-2xl  leading-snug">
           <span className="line block overflow-hidden">
             <span className="inline-block">— Based In Bangladesh.</span>
           </span>
@@ -122,19 +122,19 @@ export default function HeroSection() {
       <div className="absolute top-[calc(100vh-350px)] w-full overflow-hidden">
         <div
           ref={slider}
-          className={` relative whitespace-nowrap w-max text-[#8B0000]`}
+          className={` relative whitespace-nowrap w-max text-[#FFFFFF]`}
         >
           <p
             ref={firstText}
             className="inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px]"
           >
-            Freelance Developer - Freelance Developer -
+            Freelance Developer - 
           </p>
           <p
             ref={secondText}
             className="inline-block m-0 text-[230px] font-bold tracking-tight pr-[50px] absolute left-full top-0"
           >
-            Freelance Developer - Freelance Developer -
+            Freelance Developer - 
           </p>
         </div>
       </div>
