@@ -9,6 +9,7 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Variants, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { Lobster_Two } from 'next/font/google'
+import { ArrowUpRight } from 'lucide-react'
 
 const lobster = Lobster_Two({
   weight: '400',
@@ -59,9 +60,12 @@ const getBgColorClass = (index: number, projectColor?: string): string => {
   }
 }
 
+gsap.registerPlugin(gsap.quickTo)
+
 export default function Works() {
   const [projects, setProjects] = useState<Project[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   const hoveredIndexRef = useRef<number | null>(null)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -71,6 +75,15 @@ export default function Works() {
   const yMoveModal = useRef<gsap.QuickToFunc | null>(null)
   const xMoveCursorLabel = useRef<gsap.QuickToFunc | null>(null)
   const yMoveCursorLabel = useRef<gsap.QuickToFunc | null>(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     hoveredIndexRef.current = hoveredIndex
@@ -97,6 +110,8 @@ export default function Works() {
     }
 
     const onMouseMove = (e: MouseEvent) => {
+      if (isMobile) return // ⛔ disable all hover animation on mobile
+
       const label = cursorLabelRef.current
       if (label && hoveredIndexRef.current !== null) {
         const rect = label.getBoundingClientRect()
@@ -137,7 +152,7 @@ export default function Works() {
 
     window.addEventListener('mousemove', onMouseMove)
     return () => window.removeEventListener('mousemove', onMouseMove)
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
     client
@@ -154,7 +169,7 @@ export default function Works() {
   return (
     <main
       id='works'
-      className='relative flex min-h-screen items-center justify-center overflow-hidden px-8'
+      className='relative flex mt-20 sm:mt-24 md:mt-32 lg:mt-40  items-center justify-center overflow-hidden px-4 sm:px-8 '
     >
       <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
         <h1
@@ -167,81 +182,95 @@ export default function Works() {
           <div
             key={project._id}
             data-project-index={index}
-            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-10 px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70'
+            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#8B0000] py-5 sm:py-8 md:py-10 px-2 sm:px-4 md:px-6 transition-all duration-200 last:border-b last:border-[#8B0000] hover:opacity-70'
           >
             <h2
               data-project-index={index}
-              className={`m-0 text-xl sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
+              className={`m-0 text-normal sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
                 hoveredIndex === index ? 'text-[#8B0000]' : ''
               }`}
             >
               {project.title}
             </h2>
-            <p
-              data-project-index={index}
-              className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
-                hoveredIndex === index ? 'text-[#8B0000]' : ''
-              }`}
-            >
-              Design + Development
-            </p>
+
+            {isMobile ? (
+              <Link href={`/${project.slug.current}`}>
+                <span className="text-[#8B0000] text-base sm:text-lg font-medium flex items-center gap-1">
+                  View
+                  <ArrowUpRight size={16} />
+                </span>
+              </Link>
+            ) : (
+              <p
+                data-project-index={index}
+                className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
+                  hoveredIndex === index ? 'text-[#8B0000]' : ''
+                }`}
+              >
+                Design + Development
+              </p>
+            )}
           </div>
         ))}
       </div>
 
-      {/* MODAL IMAGE CONTAINER */}
-      <motion.div
-        ref={modalRef}
-        variants={scaleAnimation}
-        initial='initial'
-        animate={hoveredIndex !== null ? 'enter' : 'closed'}
-        className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg'
-      >
-        <div
-          className='h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]'
-          style={{
-            transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)`,
-          }}
-        >
-          {projects.map((project, i) => (
-            <div
-              key={project._id}
-              className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(
-                i,
-                project.color
-              )}`}
-            >
-              <Image
-                src={urlFor(project.mainImage)?.url() || ''}
-                alt={project.title}
-                width={300}
-                height={0}
-                draggable={false}
-                className='object-cover h-full w-full rounded-md'
-              />
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* FOLLOWING VIEW BUTTON */}
-      <div
-        ref={cursorLabelRef}
-        className={`fixed z-[101] transition-opacity duration-200 pointer-events-none select-none ${
-          hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        {hoveredIndex !== null && projects[hoveredIndex] && (
-          <Link
-            href={`/${projects[hoveredIndex].slug.current}`}
-            className='pointer-events-auto'
+      {/* MODAL IMAGE PREVIEW (DISABLED ON MOBILE) */}
+      {!isMobile && (
+        <>
+          <motion.div
+            ref={modalRef}
+            variants={scaleAnimation}
+            initial='initial'
+            animate={hoveredIndex !== null ? 'enter' : 'closed'}
+            className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg'
           >
-            <span className='inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
-              View
-            </span>
-          </Link>
-        )}
-      </div>
+            <div
+              className='h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]'
+              style={{
+                transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)`,
+              }}
+            >
+              {projects.map((project, i) => (
+                <div
+                  key={project._id}
+                  className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(
+                    i,
+                    project.color
+                  )}`}
+                >
+                  <Image
+                    src={urlFor(project.mainImage)?.url() || ''}
+                    alt={project.title}
+                    width={300}
+                    height={0}
+                    draggable={false}
+                    className='object-cover h-full w-full rounded-md'
+                  />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* FOLLOWING "VIEW" BUTTON CURSOR */}
+          <div
+            ref={cursorLabelRef}
+            className={`fixed z-[101] transition-opacity duration-200 pointer-events-none select-none ${
+              hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {hoveredIndex !== null && projects[hoveredIndex] && (
+              <Link
+                href={`/${projects[hoveredIndex].slug.current}`}
+                className='pointer-events-auto'
+              >
+                <span className='inline-block px-5 py-7 bg-[#8B0000] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
+                  view
+                </span>
+              </Link>
+            )}
+          </div>
+        </>
+      )}
     </main>
   )
 }
