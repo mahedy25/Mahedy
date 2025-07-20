@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef, useLayoutEffect, useEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,16 +20,14 @@ const shortDescription =
 
 export default function Description() {
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const buttonRef = useRef<HTMLButtonElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const animatedWrapperRef = useRef<HTMLDivElement | null>(null)
 
-  // GSAP scroll animation
+  // Scroll animation for text
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray('.reveal-text')
-
       gsap.set(items, { y: 40, opacity: 0 })
-
       gsap.to(items, {
         y: 0,
         opacity: 1,
@@ -45,68 +44,56 @@ export default function Description() {
     return () => ctx.revert()
   }, [])
 
-  // Smooth Magnetic Button effect using GSAP
-  useEffect(() => {
-    const button = buttonRef.current
-    const wrapper = wrapperRef.current
-    if (!button || !wrapper) return
+  // Magnetic effect without scaling
+  useGSAP(
+    () => {
+      const wrapper = wrapperRef.current
+      const animatedDiv = animatedWrapperRef.current
+      if (!wrapper || !animatedDiv) return
 
-    let anim: gsap.core.Tween | null = null
-    let scaleAnim: gsap.core.Tween | null = null
+      let anim: gsap.core.Tween | null = null
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const { left, top, width, height } = wrapper.getBoundingClientRect()
-      const x = e.clientX - left - width / 2
-      const y = e.clientY - top - height / 2
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = wrapper.getBoundingClientRect()
+        const x = e.clientX - rect.left - rect.width / 2
+        const y = e.clientY - rect.top - rect.height / 2
 
-      const strength = 0.25 // 25% movement toward cursor
+        const strength = 0.25
+        const maxOffset = 15
 
-      // Kill previous animation to avoid conflicts
-      anim?.kill()
-      anim = gsap.to(button, {
-        x: x * strength,
-        y: y * strength,
-        duration: 0.4,
-        ease: 'power3.out',
-      })
+        const clampedX = Math.max(-maxOffset, Math.min(x * strength, maxOffset))
+        const clampedY = Math.max(-maxOffset, Math.min(y * strength, maxOffset))
 
-      // Scale up gently on move
-      scaleAnim?.kill()
-      scaleAnim = gsap.to(button, {
-        scale: 1.1,
-        duration: 0.4,
-        ease: 'power3.out',
-      })
-    }
+        anim?.kill()
+        anim = gsap.to(animatedDiv, {
+          x: clampedX,
+          y: clampedY,
+          duration: 0.3,
+          ease: 'power3.out',
+        })
+      }
 
-    const resetPosition = () => {
-      anim?.kill()
-      scaleAnim?.kill()
+      const resetPosition = () => {
+        anim?.kill()
+        anim = gsap.to(animatedDiv, {
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1, 0.4)',
+        })
+      }
 
-      anim = gsap.to(button, {
-        x: 0,
-        y: 0,
-        duration: 0.6,
-        ease: 'elastic.out(1, 0.5)',
-      })
+      wrapper.addEventListener('mousemove', handleMouseMove)
+      wrapper.addEventListener('mouseleave', resetPosition)
 
-      scaleAnim = gsap.to(button, {
-        scale: 1,
-        duration: 0.6,
-        ease: 'elastic.out(1, 0.5)',
-      })
-    }
-
-    wrapper.addEventListener('mousemove', handleMouseMove)
-    wrapper.addEventListener('mouseleave', resetPosition)
-
-    return () => {
-      wrapper.removeEventListener('mousemove', handleMouseMove)
-      wrapper.removeEventListener('mouseleave', resetPosition)
-      anim?.kill()
-      scaleAnim?.kill()
-    }
-  }, [])
+      return () => {
+        wrapper.removeEventListener('mousemove', handleMouseMove)
+        wrapper.removeEventListener('mouseleave', resetPosition)
+        anim?.kill()
+      }
+    },
+    { dependencies: [], scope: wrapperRef }
+  )
 
   return (
     <div
@@ -114,17 +101,14 @@ export default function Description() {
       className='py-20 sm:py-24 md:py-32 lg:py-40 px-5 md:px-[100px] flex justify-center'
     >
       <div className='max-w-[1400px] w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center'>
-        {/* Left Text Section */}
+        {/* Left Text */}
         <div className='col-span-2 flex flex-col gap-6'>
-          {/* Desktop Text */}
           <p className='reveal-text text-[24px] md:text-[32px] font-medium leading-[1.4] hidden md:block'>
             {fullPhrase}
           </p>
           <p className='reveal-text text-[16px] md:text-[18px] font-light hidden md:block'>
             {fullDescription}
           </p>
-
-          {/* Mobile Short Text */}
           <p className='reveal-text text-[20px] font-medium leading-[1.4] md:hidden'>
             {shortPhrase}
           </p>
@@ -133,18 +117,20 @@ export default function Description() {
           </p>
         </div>
 
-        {/* Right Magnetic Button */}
+        {/* Magnetic Button */}
         <div className='reveal-text hidden md:flex justify-center md:justify-end'>
           <div
             ref={wrapperRef}
-            className='relative w-[150px] h-[150px] flex items-center justify-center'
+            className='relative w-[150px] h-[150px] flex items-center justify-center overflow-hidden rounded-full'
           >
-            <button
-              ref={buttonRef}
-              className='w-full h-full text-xl font-semibold text-white bg-[#004D4D] transition-all duration-300 ease-out rounded-full flex items-center justify-center cursor-pointer'
+            <div
+              ref={animatedWrapperRef}
+              className='w-full h-full rounded-full flex items-center justify-center will-change-transform'
             >
-              About Me
-            </button>
+              <button className='w-full h-full text-xl font-semibold text-white bg-[#004D4D] rounded-full flex items-center justify-center cursor-pointer'>
+                About Me
+              </button>
+            </div>
           </div>
         </div>
       </div>

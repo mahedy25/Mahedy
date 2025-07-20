@@ -20,6 +20,7 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'My Work', href: '/works' },
     { name: 'About Me', href: '/about' },
+    { name: 'Contact Me', href: '/contact' },
   ]
 
   React.useEffect(() => {
@@ -75,7 +76,7 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-5xl text-2xl font-semibold z-40 tracking-widest'
+            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-3xl lg:text-5xl text-2xl font-semibold z-40 tracking-widest'
           >
             {navLinks.map((navLink, index) => {
               const isActive = pathName === navLink.href
@@ -88,7 +89,7 @@ export default function Header() {
                     linkRefs.current[index] = el
                   }) as React.RefCallback<HTMLAnchorElement>}
                   className={`uppercase transition-colors duration-300 hover:text-[#004D4D] ${
-                    isActive ? 'text-[#004D4D]' : ''
+                    isActive ? 'text-[#800020]' : ''
                   }`}
                 >
                   {navLink.name}
@@ -106,19 +107,19 @@ export default function Header() {
                   label: 'GitHub',
                 },
                 {
-                  href: 'https://linkedin.com',
+                  href: 'https://www.linkedin.com/in/mahedy-hasan-890591365/',
                   icon: <Linkedin className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 0.8,
                   label: 'LinkedIn',
                 },
                 {
-                  href: 'https://facebook.com',
+                  href: 'https://www.facebook.com/mahedyhasan253',
                   icon: <Facebook className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 0.9,
                   label: 'Facebook',
                 },
                 {
-                  href: 'https://instagram.com',
+                  href: 'https://www.instagram.com/mahedy_25/',
                   icon: <Instagram className='w-6 h-6 hover:text-[#004D4D]' />,
                   delay: 1,
                   label: 'Instagram',

@@ -32,7 +32,7 @@ export default function Logo() {
   }, [])
 
   return (
-    <div className='md:ml-12 ml-4 mt-4'>
+    <div className='md:ml-12 lg:ml-16 ml-4 mt-4'>
       <Link href="/">
         <h1
           ref={logoRef}

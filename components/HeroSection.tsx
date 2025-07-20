@@ -129,7 +129,7 @@ export default function HeroSection() {
       </motion.div>
 
       {/* Scrolling Text Animation */}
-      <div className='absolute top-[calc(100vh-350px)] w-full overflow-hidden'>
+      <div className='absolute top-[calc(100vh-250px)] w-full overflow-hidden'>
         <div
           ref={slider}
           className='relative whitespace-nowrap w-max text-[#FFFFFF]'

@@ -46,20 +46,20 @@ export default function ProjectContent({
     >
       {/* Image Section */}
       {imageUrl && (
-        <motion.div
-          variants={itemVariants}
-          className='w-full h-fit sm:h-[500px] overflow-hidden rounded-xl shadow-md mb-6 md:mb-10 relative'
-        >
-          <Image
-            src={imageUrl}
-            alt={project.title}
-            width={1280}
-            height={720}
-            className='w-full h-fit object-contain'
-            priority
-          />
-        </motion.div>
-      )}
+  <motion.div
+    variants={itemVariants}
+    className='relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-lg mb-6 md:mb-10'
+  >
+    <Image
+      src={imageUrl}
+      alt={project.title}
+      fill
+      className='object-contain'
+      priority
+    />
+  </motion.div>
+)}
+
       {/* Title */}
       <motion.h1
         variants={itemVariants}

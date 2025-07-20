@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { client } from '../sanity/client'
@@ -32,104 +32,121 @@ type Project = {
 export default function Works() {
   const [projects, setProjects] = useState<Project[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     client
       .fetch<Project[]>(
-        `*[_type == "projects"] | order(publishedAt desc){
-          _id, title, slug, mainImage,Link, publishedAt,
+        `
+        *[_type == "projects"] | order(publishedAt desc){
+          _id, title, slug, mainImage, Link, publishedAt,
           "color": projectColor.hex
-        }`
+        }
+      `
       )
-      .then(setProjects)
+      .then((data) => {
+        setProjects(data)
+        setIsLoading(false)
+      })
       .catch(console.error)
   }, [])
 
-  useEffect(() => {
-    const elements = gsap.utils.toArray('.project-item')
+  useGSAP(
+    () => {
+      if (!isLoading && mainRef.current) {
+        gsap.to(mainRef.current, {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+        })
 
-    elements.forEach((el) => {
-      if (el instanceof HTMLElement) {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 60, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
+        gsap.utils.toArray('.project-item').forEach((el) => {
+          if (el instanceof HTMLElement) {
+            gsap.fromTo(
+              el,
+              { opacity: 0, y: 80 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: el,
+                  start: 'top 85%',
+                  toggleActions: 'play none none none',
+                  once: true,
+                },
+              }
+            )
           }
-        )
+        })
       }
-    })
-  }, [projects])
+    },
+    { scope: containerRef, dependencies: [isLoading, projects] }
+  )
 
   return (
     <main
       id='works'
-      className='px-4 md:px-8 lg:px-16 py-10 md:py-14 lg:py-20 bg-[#f9f9f9]'
+      ref={mainRef}
+      className='px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 opacity-0 max-w-7xl mx-auto text-gray-900 '
     >
-      <h1
-        className={`mb-16 ${lobster.className} text-4xl font-bold text-center sm:text-5xl md:text-6xl lg:text-7xl`}
-      >
-        My Works
-      </h1>
+      <section className='mb-16 md:mb-24 text-center'>
+        <h1
+          className={`${lobster.className} text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-800`}
+        >
+          My Works
+        </h1>
+        <p className='mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto'>
+          A showcase of my best projects, crafted with precision and passion.
+        </p>
+      </section>
 
-      <div ref={containerRef} className='space-y-20'>
-        {projects.map((project, index) => (
-          <motion.div
+      <div ref={containerRef} className='space-y-24 md:space-y-32'>
+        {projects.map((project) => (
+          <div
             key={project._id}
-            className={`project-item flex flex-col lg:flex-row items-center gap-8 ${
-              index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
-            }`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            className='project-item flex flex-col items-center gap-8 lg:gap-16'
           >
-            <div className='relative w-full lg:w-1/2 h-64 sm:h-96 rounded-xl overflow-hidden shadow-lg'>
+            <div className='relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-lg'>
               <Image
                 src={urlFor(project.mainImage).url()}
                 alt={project.title}
                 fill
-                className='object-cover'
+                className='object-contain '
               />
             </div>
 
-            <div className='w-full lg:w-1/2 space-y-4'>
-              <h2 className='text-3xl font-bold text-gray-800'>
+            <div className='w-full text-center max-w-3xl mx-auto px-4 space-y-4'>
+              <h2 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 tracking-tight'>
                 {project.title}
               </h2>
-              <p className='text-gray-600'>
-                Published: {new Date(project.publishedAt).toLocaleDateString()}
+              <p className='text-sm text-gray-500'>
+                Published on{' '}
+                <span className='font-medium text-gray-700'>
+                  {new Date(project.publishedAt).toLocaleDateString()}
+                </span>
               </p>
 
-              <div className='flex flex-col text-center justify-center sm:justify-start md:flex-row gap-4'>
+              <div className='flex flex-col sm:flex-row justify-center gap-4 pt-4'>
                 <Link
                   href={`/${project.slug.current}`}
-                  className='inline-block px-4 py-2 text-white text-sm sm:text-base rounded-md bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300'
+                  className='px-6 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300'
                 >
                   Let’s Go Deeper
                 </Link>
                 <Link
                   href={project.Link}
                   target='_blank'
-                  className=' inline-block px-4 py-2 text-white text-sm sm:text-base rounded-md bg-[#004D4D] hover:bg-[#800020] hover:underline transition-colors  duration-300'
+                  className='flex items-center justify-center gap-2 px-6 py-2 text-sm font-medium text-white rounded-lg bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300'
                 >
                   Visit Live Site
-                  <span className=''>
-                    <LucideLink className='w-4 h-4 inline-block ml-2' />
-                  </span>
+                  <LucideLink className='w-4 h-4' />
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </main>
