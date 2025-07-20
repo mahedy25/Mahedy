@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 import { portableTextComponents } from '../lib/portableTextComponents'
+import { LucideLink } from 'lucide-react' // Import LucideLink
 
 // Animation Variants
 const containerVariants: Variants = {
@@ -24,16 +25,21 @@ const itemVariants: Variants = {
   },
 }
 
+// Extend SanityDocument type to include 'Link'
+type ProjectWithLink = SanityDocument & {
+  Link?: string; // Make it optional in case some projects don't have it
+};
+
 export default function ProjectContent({
   project,
   imageUrl,
 }: {
-  project: SanityDocument
-  imageUrl: string | null
+  project: ProjectWithLink; // Use the extended type here
+  imageUrl: string | null;
 }) {
   return (
     <motion.main
-      className='container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8 md:py-16 lg:py-20 flex flex-col items-center'
+      className='container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center'
       variants={containerVariants}
       initial='hidden'
       animate='show'
@@ -42,7 +48,7 @@ export default function ProjectContent({
       {imageUrl && (
         <motion.div
           variants={itemVariants}
-          className='w-full h-[400px] sm:h-[500px] overflow-hidden rounded-xl shadow-md mb-6 md:mb-10 relative'
+          className='w-full h-fit sm:h-[500px] overflow-hidden rounded-xl shadow-md mb-6 md:mb-10 relative'
         >
           <Image
             src={imageUrl}
@@ -71,7 +77,7 @@ export default function ProjectContent({
       {/* Divider */}
       <motion.hr
         variants={itemVariants}
-        className='w-full border-t border-gray-200 my-8'
+        className='w-full border-t border-gray-200 my-4 sm:my-6'
       />
       {/* Body Content */}
       {Array.isArray(project.body) && (
@@ -86,15 +92,28 @@ export default function ProjectContent({
         </motion.div>
       )}
 
-      {/* Back Button (Moved to Bottom) */}
-      <motion.div variants={itemVariants} className='w-full mt-12'>
+      {/* Buttons */}
+      <motion.div variants={itemVariants} className='w-full flex mt-12 flex-col text-center justify-center sm:justify-start md:flex-row gap-4'>
         <Link
           href='/works'
-          className='inline-block bg-[#004D4D] hover:bg-[#800020] text-white font-medium text-sm sm:text-base px-4 sm:px-5 py-2.5 sm:py-3 rounded-md transition-colors duration-300 ease-in-out'
+          className='inline-block bg-[#004D4D] hover:bg-[#800020] text-white font-medium text-sm sm:text-base px-4  py-2 rounded-md transition-colors duration-300 ease-in-out'
         >
-          VIEW ALL
+          Keep Exploring
         </Link>
+
+        {/* New "Visit Live Site" Button */}
+        {project.Link && ( // Only render if project.Link exists
+          <Link
+            href={project.Link}
+            target='_blank' // Opens in a new tab
+            rel='noopener noreferrer' // Recommended for security
+            className='inline-flex hover:underline items-center bg-[#004D4D] hover:bg-[#800020] text-white font-medium text-sm sm:text-base px-4 py-2 rounded-md justify-center transition-colors duration-300 ease-in-out'
+          >
+            Visit Live Site
+            <LucideLink className='ml-2 h-4 w-4' /> {/* Icon for external link */}
+          </Link>
+        )}
       </motion.div>
     </motion.main>
-  )
+  );
 }

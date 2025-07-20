@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import { motion } from 'framer-motion'
 import { Lobster_Two } from 'next/font/google'
+import Logo from './Logo'
 
 const lobster = Lobster_Two({
   weight: '400',
@@ -85,10 +86,11 @@ export default function HeroSection() {
 
   return (
     <main className='relative flex h-screen overflow-hidden bg-[#ECECEC]'>
+      <Logo />
       {/* Main Text */}
       <div
         id='mainText'
-        className='absolute top-[25%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left'
+        className='absolute top-[30%] px-4 md:px-8 lg:px-16 sm:top-[35%] -translate-y-1/2 z-10 max-w-[500px] lg:max-w-[900px] text-left'
       >
         <h1
           className={`${lobster.className} w-[250px] sm:w-full text-4xl md:text-5xl lg:text-7xl leading-snug font-bold`}

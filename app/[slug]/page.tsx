@@ -7,6 +7,7 @@ import type { SanityDocument } from 'next-sanity'
 const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
   _id,
   title,
+  Link,
   mainImage,
   publishedAt,
   body,
@@ -32,8 +33,8 @@ export default async function ProjectPage({
 
   const imageUrl = project.mainImage
     ? urlFor(project.mainImage)
-        .width(1600)
-        .height(1000)
+        .width(1280)
+        .height(720)
         .auto('format')
         .quality(90)
         .url()

@@ -10,6 +10,7 @@ import { urlFor } from '@/sanity/lib/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Lobster_Two } from 'next/font/google'
 import Link from 'next/link'
+import { LucideLink } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -22,6 +23,7 @@ type Project = {
   _id: string
   title: string
   slug: { current: string }
+  Link: string
   mainImage: SanityImageSource
   publishedAt: string
   color?: string
@@ -35,7 +37,7 @@ export default function Works() {
     client
       .fetch<Project[]>(
         `*[_type == "projects"] | order(publishedAt desc){
-          _id, title, slug, mainImage, publishedAt,
+          _id, title, slug, mainImage,Link, publishedAt,
           "color": projectColor.hex
         }`
       )
@@ -107,12 +109,25 @@ export default function Works() {
               <p className='text-gray-600'>
                 Published: {new Date(project.publishedAt).toLocaleDateString()}
               </p>
-              <Link
-                href={`/${project.slug.current}`}
-                className='inline-block px-4 py-2 text-white  rounded-md bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300'
-              >
-                Peoject Details
-              </Link>
+
+              <div className='flex flex-col text-center justify-center sm:justify-start md:flex-row gap-4'>
+                <Link
+                  href={`/${project.slug.current}`}
+                  className='inline-block px-4 py-2 text-white text-sm sm:text-base rounded-md bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300'
+                >
+                  Let’s Go Deeper
+                </Link>
+                <Link
+                  href={project.Link}
+                  target='_blank'
+                  className=' inline-block px-4 py-2 text-white text-sm sm:text-base rounded-md bg-[#004D4D] hover:bg-[#800020] hover:underline transition-colors  duration-300'
+                >
+                  Visit Live Site
+                  <span className=''>
+                    <LucideLink className='w-4 h-4 inline-block ml-2' />
+                  </span>
+                </Link>
+              </div>
             </div>
           </motion.div>
         ))}

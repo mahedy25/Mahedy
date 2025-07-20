@@ -30,6 +30,10 @@ export const postType = defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'Link',
+      type: 'string',
+    }),
+    defineField({
       name: 'body',
       type: 'array',
       of: [{type: 'block'}],

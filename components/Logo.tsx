@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Fugaz_One } from 'next/font/google'
+import { Lobster_Two } from 'next/font/google'
 
-const lobster = Fugaz_One({
+const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],
 })
@@ -32,7 +32,7 @@ export default function Logo() {
   }, [])
 
   return (
-    <div className=''>
+    <div className='md:ml-12 ml-4 mt-4'>
       <Link href="/">
         <h1
           ref={logoRef}
@@ -62,7 +62,7 @@ export default function Logo() {
                 gap: '4px',
               }}
             >
-              <span>Coded -</span>
+              <span>Coded by - </span>
               <span>Mahedy</span>
             </motion.div>
 

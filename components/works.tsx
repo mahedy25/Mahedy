@@ -10,6 +10,12 @@ import { Variants, motion } from 'framer-motion'
 import gsap from 'gsap'
 
 import { ArrowUpRight } from 'lucide-react'
+import { Lobster_Two } from 'next/font/google'
+
+const lobster = Lobster_Two({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 
 
@@ -171,6 +177,12 @@ export default function Works() {
     >
       <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
 
+        <h1
+        className={`mb-16 ${lobster.className} text-4xl font-bold text-center sm:text-5xl md:text-6xl lg:text-7xl`}
+      >
+        Latest Works
+      </h1>
+
         {projects.map((project, index) => (
           <div
             key={project._id}
@@ -256,8 +268,8 @@ export default function Works() {
                 href={`/${projects[hoveredIndex].slug.current}`}
                 className='pointer-events-auto'
               >
-                <span className='inline-block px-5 py-7 bg-[#004D4D] rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
-                  view
+                <span className='flex w-[80px] h-[80px] bg-[#004D4D] text-center items-center justify-center rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
+                  Explore
                 </span>
               </Link>
             )}
@@ -268,7 +280,7 @@ export default function Works() {
     <div className='py-15 w-full flex items-center justify-center'>
       <Link href={'/works'}>
             <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300  text-white px-5 py-4 rounded-full font-semibold'>
-        See More Work
+        Discover More Work
       </button>
       </Link>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Logo from './Logo'
+
 import Link from 'next/link'
 import { Facebook, Github, Instagram, Linkedin, Menu, X } from 'lucide-react'
 import * as React from 'react'
@@ -37,11 +37,10 @@ export default function Header() {
   }, [open])
 
   return (
-    <main className='bg-[#ECECEC] '>
+    <main className=' '>
       {/* Header Section */}
-      <div className='flex justify-between items-center py-4 px-4 md:px-8 lg:px-16'>
-        {/* Logo */}
-        <Logo />
+      <div className='flex justify-between items-center  px-4 md:px-8 lg:px-16'>
+
 
         {/* Desktop Nav Links Removed */}
         <div className='hidden md:flex'></div>
