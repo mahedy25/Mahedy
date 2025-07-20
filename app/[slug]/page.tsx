@@ -1,19 +1,9 @@
-import { type SanityDocument } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation'
+import { client } from '../sanity/client'
+import { urlFor } from '@/sanity/lib/image'
+import ProjectContent from '../../components/ProjectContent'
+import type { SanityDocument } from 'next-sanity'
 
-import ProjectContent from "../../components/ProjectContent";
-import { client } from "../sanity/client";
-
-// Sanity image builder config
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
-
-// Query must be a string with backticks
 const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
   _id,
   title,
@@ -21,32 +11,33 @@ const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
   publishedAt,
   body,
   slug
-}`;
+}`
 
-const options = { next: { revalidate: 30 } };
+const revalidate = 30
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }) {
-  // Await params before using
-  const { slug } = await params;
+  const { slug } = await params // ✅ no await needed
 
-  // Fetch project with slug param
   const project = await client.fetch<SanityDocument>(
     PROJECT_QUERY,
     { slug },
-    options
-  );
+    { next: { revalidate } }
+  )
 
-  if (!project) {
-    notFound();
-  }
+  if (!project) notFound()
 
   const imageUrl = project.mainImage
-    ? urlFor(project.mainImage)?.width(550).height(310).url() ?? null
-    : null;
+    ? urlFor(project.mainImage)
+        .width(1600)
+        .height(1000)
+        .auto('format')
+        .quality(90)
+        .url()
+    : null
 
-  return <ProjectContent project={project} imageUrl={imageUrl} />;
+  return <ProjectContent project={project} imageUrl={imageUrl} />
 }
