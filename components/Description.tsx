@@ -141,7 +141,7 @@ export default function Description() {
           >
             <button
               ref={buttonRef}
-              className='w-full h-full text-xl font-semibold text-white bg-[#004D4D] hover:bg-[#800020] transition-all duration-300 ease-out rounded-full flex items-center justify-center cursor-pointer'
+              className='w-full h-full text-xl font-semibold text-white bg-[#004D4D] transition-all duration-300 ease-out rounded-full flex items-center justify-center cursor-pointer'
             >
               About Me
             </button>

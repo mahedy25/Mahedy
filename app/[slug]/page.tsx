@@ -1,41 +1,69 @@
-import { type SanityDocument } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import { type SanityDocument } from 'next-sanity'
+import imageUrlBuilder from '@sanity/image-url'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
-import ProjectContent from "../../components/ProjectContent";
-import { client } from "../sanity/client";
+import ProjectContent from '../../components/ProjectContent'
+import { client } from '../sanity/client'
 
-// Sanity image builder config
-const { projectId, dataset } = client.config();
+// Build image URL
+const { projectId, dataset } = client.config()
 const urlFor = (source: SanityImageSource) =>
   projectId && dataset
     ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
+    : null
 
-// Updated query to remove the smallDescription field
+// GROQ query
 const PROJECT_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
-  _id, title, mainImage, publishedAt, body, slug
-}`;
+  _id,
+  title,
+  mainImage,
+  publishedAt,
+  body,
+  slug
+}`
 
-const options = { next: { revalidate: 30 } };
+const options = { next: { revalidate: 30 } }
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string }
 }) {
-  const project = await client.fetch<SanityDocument>(PROJECT_QUERY, await params, options);
+  const project = await client.fetch<SanityDocument>(
+    PROJECT_QUERY,
+    { slug: params.slug },
+    options
+  )
 
-  if (!project) {
-    notFound();
-  }
-
-  const imageUrl = project.mainImage
-    ? (urlFor(project.mainImage)?.width(550).height(310).url() ?? null)
-    : null;
+  if (!project) notFound()
 
   return (
-    <ProjectContent project={project} imageUrl={imageUrl} />
-  );
+    <div className='px-4 py-10 max-w-5xl mx-auto space-y-10'>
+      {/* ✅ High-quality, sharp image */}
+      {project.mainImage && (
+        <div className='w-full overflow-hidden rounded-xl shadow-md'>
+          <Image
+            src={
+              urlFor(project.mainImage)
+                ?.auto('format')
+                .fit('max')
+                .width(1200)
+                .height(600)
+                .url() || '/placeholder.jpg'
+            }
+            alt={project.title}
+            width={1200}
+            height={600}
+            className='w-full h-auto object-cover'
+            priority
+          />
+        </div>
+      )}
+
+      {/* Project content */}
+      <ProjectContent project={project} imageUrl={null} />
+    </div>
+  )
 }

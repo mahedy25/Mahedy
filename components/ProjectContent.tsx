@@ -38,16 +38,7 @@ export default function ProjectContent({
       initial='hidden'
       animate='show'
     >
-      {/* Back Button */}
-      <motion.div variants={itemVariants} className='w-full mb-6 sm:mb-8'>
-        <Link
-          href='/'
-          className='inline-block bg-[#14B8A6] text-white font-medium text-sm sm:text-base px-4 sm:px-5 py-2.5 sm:py-3 rounded-md transition-colors'
-        >
-          ← Back to projects
-        </Link>
-      </motion.div>
-      {/* Image Section */}     {' '}
+      {/* Image Section */}
       {imageUrl && (
         <motion.div
           variants={itemVariants}
@@ -61,7 +52,6 @@ export default function ProjectContent({
             className='w-full h-fit object-contain'
             priority
           />
-                 {' '}
         </motion.div>
       )}
       {/* Title */}
@@ -95,6 +85,16 @@ export default function ProjectContent({
           />
         </motion.div>
       )}
+
+      {/* Back Button (Moved to Bottom) */}
+      <motion.div variants={itemVariants} className='w-full mt-12'>
+        <Link
+          href='/works'
+          className='inline-block bg-[#004D4D] hover:bg-[#800020] text-white font-medium text-sm sm:text-base px-4 sm:px-5 py-2.5 sm:py-3 rounded-md transition-colors duration-300 ease-in-out'
+        >
+          VIEW ALL
+        </Link>
+      </motion.div>
     </motion.main>
   )
 }

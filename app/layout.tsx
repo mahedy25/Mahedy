@@ -1,8 +1,8 @@
 // app/layout.tsx
+import Header from '@/components/Header'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins } from 'next/font/google'
-
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,8 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-[#FFFFFF] text-[#333333] scroll-smooth `}
       >
         <div className='h-full w-full '>
+          <Header />
           {children}
-          </div>
+        </div>
       </body>
     </html>
   )

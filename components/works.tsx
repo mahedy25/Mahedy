@@ -8,15 +8,10 @@ import { urlFor } from '@/sanity/lib/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Variants, motion } from 'framer-motion'
 import gsap from 'gsap'
-import { Lobster_Two } from 'next/font/google'
+
 import { ArrowUpRight } from 'lucide-react'
 
 
-
-const lobster = Lobster_Two({
-  weight: '400',
-  subsets: ['latin'],
-})
 
 type Project = {
   _id: string
@@ -175,11 +170,6 @@ export default function Works() {
       className='relative flex mt-20 sm:mt-24 md:mt-32 lg:mt-40  items-center justify-center overflow-hidden px-4 sm:px-8 '
     >
       <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
-        <h1
-          className={`mb-10 ${lobster.className} text-4xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl`}
-        >
-          My Works
-        </h1>
 
         {projects.map((project, index) => (
           <div
@@ -276,9 +266,12 @@ export default function Works() {
       )}
     </main>
     <div className='py-15 w-full flex items-center justify-center'>
-      <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300  text-white px-5 py-4 rounded-full font-semibold'>
+      <Link href={'/works'}>
+            <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300  text-white px-5 py-4 rounded-full font-semibold'>
         See More Work
       </button>
+      </Link>
+
     </div>
     </>
   )
