@@ -28,12 +28,15 @@ const options = { next: { revalidate: 30 } };
 export default async function ProjectPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  // Await params before using
+  const { slug } = await params;
+
   // Fetch project with slug param
   const project = await client.fetch<SanityDocument>(
     PROJECT_QUERY,
-    { slug: params.slug },
+    { slug },
     options
   );
 
