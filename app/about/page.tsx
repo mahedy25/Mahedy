@@ -1,12 +1,16 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { client } from '../sanity/client'
+import { Lobster_Two } from 'next/font/google'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const lobster = Lobster_Two({ weight: '400', subsets: ['latin'] })
 
 type Tool = {
   _id: string
@@ -19,137 +23,174 @@ type Tool = {
 }
 
 export default function AboutMe() {
-  const aboutRef = useRef(null)
-  const approachRef = useRef(null)
-  const eduRef = useRef(null)
-  const toolsRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [tools, setTools] = useState<Tool[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    const sections = [aboutRef, approachRef, eduRef, toolsRef]
-
-    sections.forEach((ref, i) => {
-      if (!ref.current) return
-      const direction = i % 2 === 0 ? 100 : -100
-
-      gsap.fromTo(
-        ref.current,
-        { opacity: 0, y: direction },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: ref.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reset',
-          },
-        }
-      )
-    })
-
     const fetchTools = async () => {
       const query = `*[_type == "tools"]{ _id, title, image { asset->{url} } }`
       const data: Tool[] = await client.fetch(query)
       setTools(data)
+      setIsLoaded(true)
     }
-
     fetchTools()
   }, [])
 
+  useGSAP(
+    () => {
+      if (!containerRef.current) return
+      const ctx = gsap.context(() => {
+        const fadeSlides = gsap.utils.toArray('.fade-slide')
+        fadeSlides.forEach((el) => {
+          gsap.fromTo(
+            el as HTMLElement,
+            { y: 40, autoAlpha: 0 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: el as HTMLElement,
+                start: 'top 85%',
+                once: true,
+              },
+            }
+          )
+        })
+      }, containerRef)
+
+      return () => ctx.revert()
+    },
+    { dependencies: [isLoaded], scope: containerRef }
+  )
+
   return (
-    <div className="min-h-screen bg-white text-neutral-900 font-sans py-24 px-4 md:px-12">
-      <div className="max-w-screen-xl mx-auto space-y-32">
+    <main
+      id='about'
+      ref={containerRef}
+      className='relative min-h-screen flex items-center justify-center px-4 sm:px-12 lg:px-24 py-20 overflow-hidden bg-opacity-80 backdrop-blur-md rounded-3xl'
+    >
+      {/* Background Huge Triangle */}
+      <svg
+        className='absolute top-20 left-20 w-72 h-72 opacity-10 text-[#800020] z-0 pointer-events-none'
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 100 100'
+        fill='currentColor'
+        aria-hidden='true'
+      >
+        <polygon points='0,100 50,0 100,100' />
+      </svg>
+
+      {/* Main Content */}
+      <section className='relative z-10 max-w-4xl w-full space-y-20'>
         {/* About Me Section */}
-        <section
-          ref={aboutRef}
-          className="flex flex-col md:flex-row items-center justify-between gap-16"
-        >
-          <div className="md:w-1/2 text-center md:text-left space-y-6">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+        <div className='grid md:grid-cols-2 gap-10 items-center'>
+          <div>
+            <h1
+              className={`fade-slide ${lobster.className} text-5xl sm:text-6xl font-extrabold tracking-tight mb-6 text-[#800020]`}
+            >
               About Me
             </h1>
-            <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
-              I’m <strong>Md Mahedy Hasan</strong>, a passionate full-stack web developer
-              from Chattogram, Bangladesh. I craft high-performance, accessible digital
-              experiences using <strong>Next.js</strong>, <strong>GSAP</strong>, and{' '}
-              <strong>Tailwind CSS</strong>. My goal is to build web interfaces that are
-              not only fast—but delightful.
+            <p className='fade-slide text-lg sm:text-xl leading-relaxed font-light text-gray-700 mb-4'>
+              I’m Mahedy Hasan, a creative full-stack developer based in
+              Chattogram, Bangladesh.
+            </p>
+            <p className='fade-slide text-lg sm:text-xl leading-relaxed font-light text-gray-700'>
+              I specialize in crafting delightful web experiences using Next.js,
+              GSAP, Tailwind CSS & More.
             </p>
           </div>
 
-          <div className="md:w-1/2 flex justify-center">
-            <Image
-              src="/images/heroBG.png"
-              alt="Md Mahedy Hasan"
-              width={350}
-              height={350}
-              className="rounded-2xl shadow-2xl object-conitain "
-            />
+          <div className='flex justify-center'>
+            <div className='relative w-[280px] h-[380px] rounded-2xl overflow-hidden shadow-2xl fade-slide'>
+              <Image
+                src='/images/myimage.jpg'
+                alt='Md Mahedy Hasan'
+                fill
+                className='object-cover'
+              />
+            </div>
           </div>
-        </section>
+        </div>
 
-        {/* My Approach */}
-        <section ref={approachRef} className="space-y-6 text-center md:text-left">
-          <h2 className="text-4xl font-bold tracking-tight">My Approach</h2>
-          <p className="text-lg md:text-xl text-neutral-700 leading-relaxed max-w-3xl mx-auto md:mx-0">
-            I believe in <strong>clarity</strong>, <strong>simplicity</strong>, and{' '}
-            <strong>impact</strong>. I write clean, maintainable code and follow a
-            mobile-first, performance-oriented mindset. Every animation, layout, and
-            transition is crafted to offer a smooth and meaningful user experience.
+        {/* My Approach Section */}
+        <div>
+          <h2
+            className={`fade-slide ${lobster.className} text-4xl sm:text-5xl font-extrabold mb-6 text-[#800020]`}
+          >
+            My Approach
+          </h2>
+          <p className='fade-slide text-lg sm:text-xl leading-relaxed font-light text-gray-700 max-w-3xl'>
+            Clean. Performant. Purposeful. I blend structure with creativity,
+            ensuring every UI and animation feels intentional and smooth.
           </p>
-        </section>
+        </div>
 
         {/* Education & Location */}
-        <section ref={eduRef} className="space-y-10 text-center md:text-left">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight">Education</h2>
-            <p className="text-lg md:text-xl text-neutral-700">
-              Studying BSS in Economics at Uttar Kattali Al-Haj Mostafa Hakim College.
-              Completed HSC in 2022 and SSC in 2020 (Science).
+        <div className='grid md:grid-cols-2 gap-14'>
+          <div>
+            <h2
+              className={`fade-slide ${lobster.className} text-4xl font-extrabold mb-4 text-[#800020]`}
+            >
+              Education
+            </h2>
+            <p className='fade-slide text-lg font-light text-gray-700'>
+              BSS in Economics at Uttar Kattali Al-Haj Mostafa Hakim College.
+              <br />
+              Completed HSC (2022) and SSC (2020).
             </p>
           </div>
-
-          <div className="space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight">Current Location</h2>
-            <p className="text-lg md:text-xl text-neutral-700">
-              Living in Saraipara, Pahartali, Chattogram, Bangladesh.
+          <div>
+            <h2
+              className={`fade-slide ${lobster.className} text-4xl font-extrabold mb-4 text-[#800020]`}
+            >
+              Location
+            </h2>
+            <p className='fade-slide text-lg font-light text-gray-700'>
+              Saraipara, Pahartali, Chattogram, Bangladesh.
             </p>
           </div>
-        </section>
+        </div>
 
         {/* Tools Section */}
-        <section ref={toolsRef} className="space-y-10">
-          <h2 className="text-4xl font-bold tracking-tight text-center md:text-left">
+        <div>
+          <h2
+            className={`fade-slide ${lobster.className} text-4xl sm:text-5xl font-extrabold mb-10 text-[#800020]`}
+          >
             Tools I Use
           </h2>
 
           {tools.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8'>
               {tools.map((tool) => (
                 <div
                   key={tool._id}
-                  className="flex flex-col items-center justify-center rounded-xl p-4 shadow-md bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className='fade-slide relative flex flex-col items-center justify-center rounded-2xl bg-white shadow-lg w-[140px] h-[140px]'
                 >
-                  <Image
-                    src={tool.image.asset.url}
-                    alt={tool.title}
-                    width={48}
-                    height={48}
-                    className="mb-3"
-                  />
-                  <span className="text-base font-medium capitalize text-neutral-800">
-                    {tool.title}
-                  </span>
+                  {/* Gradient border */}
+                  <div className='absolute inset-0 rounded-2xl bg-[conic-gradient(from_var(--angle),#ff0080,#7928ca,#2afadf,#00f0ff,#ff0080)] p-[2px] animate-spin-slower z-0' />
+                  <div className='relative z-10 bg-white w-full h-full flex flex-col items-center justify-center rounded-[inherit]'>
+                    <Image
+                      src={tool.image.asset.url}
+                      alt={tool.title}
+                      width={48}
+                      height={48}
+                      className='mb-2'
+                    />
+                    <span className='text-sm font-medium capitalize text-gray-900'>
+                      {tool.title}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-center text-neutral-600">No tools found.</p>
+            <p className='fade-slide text-gray-700'>No tools found.</p>
           )}
-        </section>
-      </div>
-    </div>
+        </div>
+      </section>
+    </main>
   )
 }

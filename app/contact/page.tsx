@@ -4,12 +4,6 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { Lobster_Two } from 'next/font/google'
-
-const lobster = Lobster_Two({
-  weight: '400',
-  subsets: ['latin'],
-})
-
 import {
   MailIcon,
   PhoneIcon,
@@ -19,6 +13,8 @@ import {
   InstagramIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+
+const lobster = Lobster_Two({ weight: '400', subsets: ['latin'] })
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -45,11 +41,11 @@ export default function Contact() {
     <main
       id='contact'
       ref={containerRef}
-      className='min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-24 py-20 relative overflow-hidden'
+      className='relative min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-24 py-20 overflow-hidden'
     >
-      {/* Subtle background shape */}
+      {/* Background Huge Circle */}
       <svg
-        className='absolute -top-20 -right-20 w-72 h-72 opacity-10 text-[#800020]'
+        className='absolute rotate-45 -top-20 -left-20 w-72 h-72 opacity-10 text-[#800020]'
         xmlns='http://www.w3.org/2000/svg'
         fill='currentColor'
         viewBox='0 0 100 100'
@@ -58,9 +54,11 @@ export default function Contact() {
         <circle cx='50' cy='50' r='50' />
       </svg>
 
-      <section className='relative max-w-3xl w-full bg-white bg-opacity-80 backdrop-blur-md rounded-3xl p-12 shadow-lg text-gray-800'>
+      <section className='relative z-10 max-w-3xl w-full bg-white bg-opacity-80 backdrop-blur-md rounded-3xl p-12 shadow-lg text-gray-800'>
         {/* Heading */}
-        <h1 className={`fade-slide ${lobster.className} text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight text-center sm:text-left mb-6 text-[#800020]`}>
+        <h1
+          className={`fade-slide ${lobster.className} text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight text-center sm:text-left mb-6 text-[#800020]`}
+        >
           Get in Touch
         </h1>
 
@@ -102,16 +100,25 @@ export default function Contact() {
         {/* Social Icons */}
         <div className='fade-slide flex justify-center sm:justify-start gap-8 text-gray-600'>
           {[
-              { Icon: GithubIcon, href: 'https://github.com/mahedy25' },
-              { Icon: LinkedinIcon, href: 'https://www.linkedin.com/in/mahedy-hasan-890591365/' },
-              { Icon: FacebookIcon, href: 'https://www.facebook.com/mahedyhasan253' },
-              { Icon: InstagramIcon, href: 'https://www.instagram.com/mahedy_25/' },
+            { Icon: GithubIcon, href: 'https://github.com/mahedy25' },
+            {
+              Icon: LinkedinIcon,
+              href: 'https://www.linkedin.com/in/mahedy-hasan-890591365/',
+            },
+            {
+              Icon: FacebookIcon,
+              href: 'https://www.facebook.com/mahedyhasan253',
+            },
+            {
+              Icon: InstagramIcon,
+              href: 'https://www.instagram.com/mahedy_25/',
+            },
           ].map(({ Icon, href }, i) => (
             <Link
               key={i}
               href={href}
               target='_blank'
-              className='group inline-flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md text-[#800020] hover:text-[#004D4D] transition-transform duration-300 transform will-change-transform preserve-3d'
+              className='group inline-flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md text-[#800020] hover:text-[#004D4D] transition-transform duration-300 transform'
               aria-label={`Visit my ${Icon.displayName || 'social'} page`}
               style={{
                 WebkitFontSmoothing: 'antialiased',
@@ -120,7 +127,7 @@ export default function Contact() {
               }}
             >
               <Icon
-                className='w-6 h-6'
+                className='w-9 h-7'
                 style={{ shapeRendering: 'geometricPrecision' }}
               />
             </Link>
