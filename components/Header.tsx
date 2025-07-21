@@ -76,7 +76,7 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center gap-10 md:text-3xl lg:text-5xl text-2xl font-semibold z-40 tracking-widest'
+            className='fixed top-0 right-0 w-full md:w-[40%] h-screen bg-[#141516] text-white flex flex-col items-center justify-center gap-10 md:text-3xl lg:text-5xl text-2xl font-semibold z-40 tracking-widest'
           >
             {navLinks.map((navLink, index) => {
               const isActive = pathName === navLink.href

@@ -6,6 +6,7 @@ import { client } from '../sanity/client'
 import { Lobster_Two } from 'next/font/google'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import TransitionCurve from '@/components/TransitionCurve'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -132,7 +133,8 @@ export default function AboutMe() {
 
   return (
     <>
-      <main
+      <TransitionCurve>
+        <main
         id='about'
         ref={containerRef}
         className='relative min-h-screen flex items-center justify-center px-4 sm:px-12 lg:px-24 py-20 bg-white'
@@ -258,6 +260,7 @@ export default function AboutMe() {
           </div>
         </section>
       </main>
+      </TransitionCurve>
     </>
   )
 }
