@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef, useLayoutEffect } from 'react'
+import { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import Link from 'next/link'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -20,79 +21,26 @@ const shortDescription =
 
 export default function Description() {
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const animatedWrapperRef = useRef<HTMLDivElement | null>(null)
 
-  // Scroll animation for text
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const items = gsap.utils.toArray('.reveal-text')
-      gsap.set(items, { y: 40, opacity: 0 })
+      gsap.set(items, { y: 50, opacity: 0 })
+
       gsap.to(items, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.2,
+        duration: 1,
+        ease: 'power2.out',
+        stagger: 0.15,
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top 80%',
+          start: 'top 85%',
+          once: true, // only animate once for smoother UX
         },
       })
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  // Magnetic effect without scaling
-  useGSAP(
-    () => {
-      const wrapper = wrapperRef.current
-      const animatedDiv = animatedWrapperRef.current
-      if (!wrapper || !animatedDiv) return
-
-      let anim: gsap.core.Tween | null = null
-
-      const handleMouseMove = (e: MouseEvent) => {
-        const rect = wrapper.getBoundingClientRect()
-        const x = e.clientX - rect.left - rect.width / 2
-        const y = e.clientY - rect.top - rect.height / 2
-
-        const strength = 0.25
-        const maxOffset = 15
-
-        const clampedX = Math.max(-maxOffset, Math.min(x * strength, maxOffset))
-        const clampedY = Math.max(-maxOffset, Math.min(y * strength, maxOffset))
-
-        anim?.kill()
-        anim = gsap.to(animatedDiv, {
-          x: clampedX,
-          y: clampedY,
-          duration: 0.3,
-          ease: 'power3.out',
-        })
-      }
-
-      const resetPosition = () => {
-        anim?.kill()
-        anim = gsap.to(animatedDiv, {
-          x: 0,
-          y: 0,
-          duration: 0.6,
-          ease: 'elastic.out(1, 0.4)',
-        })
-      }
-
-      wrapper.addEventListener('mousemove', handleMouseMove)
-      wrapper.addEventListener('mouseleave', resetPosition)
-
-      return () => {
-        wrapper.removeEventListener('mousemove', handleMouseMove)
-        wrapper.removeEventListener('mouseleave', resetPosition)
-        anim?.kill()
-      }
     },
-    { dependencies: [], scope: wrapperRef }
+    { scope: containerRef }
   )
 
   return (
@@ -117,21 +65,13 @@ export default function Description() {
           </p>
         </div>
 
-        {/* Magnetic Button */}
+        {/* About Me Button */}
         <div className='reveal-text hidden md:flex justify-center md:justify-end'>
-          <div
-            ref={wrapperRef}
-            className='relative w-[150px] h-[150px] flex items-center justify-center overflow-hidden rounded-full'
-          >
-            <div
-              ref={animatedWrapperRef}
-              className='w-full h-full rounded-full flex items-center justify-center will-change-transform'
-            >
-              <button className='w-full h-full text-xl font-semibold text-white bg-[#004D4D] rounded-full flex items-center justify-center cursor-pointer'>
-                About Me
-              </button>
-            </div>
-          </div>
+          <Link href='/about'>
+            <button className='text-xl cursor-pointer font-semibold text-white bg-[#004D4D] rounded-full w-[150px] h-[150px] flex items-center justify-center transition-transform duration-300 hover:scale-105'>
+              About Me
+            </button>
+          </Link>
         </div>
       </div>
     </div>

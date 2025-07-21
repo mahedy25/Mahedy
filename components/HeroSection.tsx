@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { Lobster_Two } from 'next/font/google'
 import Logo from './Logo'
 
+
 const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],

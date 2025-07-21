@@ -33,31 +33,25 @@ export default function Works() {
   const [projects, setProjects] = useState<Project[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const mainRef = useRef<HTMLElement>(null)
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     client
-      .fetch<Project[]>(
-        `
+      .fetch<Project[]>(`
         *[_type == "projects"] | order(publishedAt desc){
           _id, title, slug, mainImage, Link, publishedAt,
           "color": projectColor.hex
         }
-      `
-      )
-      .then((data) => {
-        setProjects(data)
-        setIsLoading(false)
-      })
+      `)
+      .then(setProjects)
       .catch(console.error)
   }, [])
 
   useGSAP(
     () => {
-      if (!isLoading && mainRef.current) {
+      if (projects.length > 0) {
         gsap.to(mainRef.current, {
-          opacity: 1,
-          duration: 0.8,
+          autoAlpha: 1,
+          duration: 1,
           ease: 'power2.out',
         })
 
@@ -65,16 +59,15 @@ export default function Works() {
           if (el instanceof HTMLElement) {
             gsap.fromTo(
               el,
-              { opacity: 0, y: 80 },
+              { opacity: 0, y: 60 },
               {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
+                duration: 0.8,
                 ease: 'power3.out',
                 scrollTrigger: {
                   trigger: el,
                   start: 'top 85%',
-                  toggleActions: 'play none none none',
                   once: true,
                 },
               }
@@ -83,14 +76,14 @@ export default function Works() {
         })
       }
     },
-    { scope: containerRef, dependencies: [isLoading, projects] }
+    { scope: containerRef, dependencies: [projects.length] }
   )
 
   return (
     <main
       id='works'
       ref={mainRef}
-      className='px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 opacity-0 max-w-7xl mx-auto text-gray-900 '
+      className='opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900'
     >
       <section className='mb-16 md:mb-24 text-center'>
         <h1
@@ -114,7 +107,7 @@ export default function Works() {
                 src={urlFor(project.mainImage).url()}
                 alt={project.title}
                 fill
-                className='object-contain '
+                className='object-contain'
               />
             </div>
 
