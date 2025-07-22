@@ -37,12 +37,10 @@ export default function Works() {
   useEffect(() => {
     client
       .fetch<Project[]>(
-        `
-        *[_type == "projects"] | order(publishedAt desc){
+        `*[_type == "projects"] | order(publishedAt desc){
           _id, title, slug, mainImage, Link, publishedAt,
           "color": projectColor.hex
-        }
-      `
+        }`
       )
       .then(setProjects)
       .catch(console.error)
@@ -85,9 +83,20 @@ export default function Works() {
     <main
       id='works'
       ref={mainRef}
-      className='opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900'
+      className='relative opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900'
     >
-      <section className='mb-16 md:mb-24 text-center'>
+      {/* Background Cube (same as triangle style in AboutMe) */}
+      <svg
+        className='absolute top-20 -left-15 w-72 h-72 opacity-10 text-[#800020] z-0'
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 100 100'
+        fill='currentColor'
+        aria-hidden='true'
+      >
+        <rect x='10' y='10' width='80' height='80' />
+      </svg>
+
+      <section className='mb-16 md:mb-24 text-center relative z-10'>
         <h1
           className={`${lobster.className} text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-800`}
         >
@@ -98,7 +107,10 @@ export default function Works() {
         </p>
       </section>
 
-      <div ref={containerRef} className='space-y-24 md:space-y-32'>
+      <div
+        ref={containerRef}
+        className='space-y-24 md:space-y-32 relative z-10'
+      >
         {projects.map((project) => (
           <div
             key={project._id}
