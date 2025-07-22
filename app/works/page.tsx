@@ -11,7 +11,6 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Lobster_Two } from 'next/font/google'
 import Link from 'next/link'
 import { LucideLink } from 'lucide-react'
-import TransitionCurve from '@/components/TransitionCurve'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -37,12 +36,14 @@ export default function Works() {
 
   useEffect(() => {
     client
-      .fetch<Project[]>(`
+      .fetch<Project[]>(
+        `
         *[_type == "projects"] | order(publishedAt desc){
           _id, title, slug, mainImage, Link, publishedAt,
           "color": projectColor.hex
         }
-      `)
+      `
+      )
       .then(setProjects)
       .catch(console.error)
   }, [])
@@ -81,8 +82,7 @@ export default function Works() {
   )
 
   return (
-    <TransitionCurve>
-<main
+    <main
       id='works'
       ref={mainRef}
       className='opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900'
@@ -145,6 +145,5 @@ export default function Works() {
         ))}
       </div>
     </main>
-    </TransitionCurve>
   )
 }

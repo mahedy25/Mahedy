@@ -13,7 +13,6 @@ import {
   InstagramIcon,
 } from 'lucide-react'
 import Link from 'next/link'
-import TransitionCurve from '@/components/TransitionCurve'
 
 const lobster = Lobster_Two({ weight: '400', subsets: ['latin'] })
 
@@ -39,8 +38,7 @@ export default function Contact() {
   }, [])
 
   return (
-    <TransitionCurve>
-      <main
+    <main
       id='contact'
       ref={containerRef}
       className='relative min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-24 py-20 overflow-hidden'
@@ -137,6 +135,5 @@ export default function Contact() {
         </div>
       </section>
     </main>
-    </TransitionCurve>
   )
 }
