@@ -8,7 +8,6 @@ import { urlFor } from '@/sanity/lib/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { Variants, motion } from 'framer-motion'
 import gsap from 'gsap'
-
 import { ArrowUpRight } from 'lucide-react'
 import { Lobster_Two } from 'next/font/google'
 
@@ -16,8 +15,6 @@ const lobster = Lobster_Two({
   weight: '400',
   subsets: ['latin'],
 })
-
-
 
 type Project = {
   _id: string
@@ -113,7 +110,7 @@ export default function Works() {
     }
 
     const onMouseMove = (e: MouseEvent) => {
-      if (isMobile) return // ⛔ disable all hover animation on mobile
+      if (isMobile) return // disable hover animation on mobile
 
       const label = cursorLabelRef.current
       if (label && hoveredIndexRef.current !== null) {
@@ -171,120 +168,120 @@ export default function Works() {
 
   return (
     <>
-    <main
-      id='works'
-      className='relative flex mt-20 sm:mt-24 md:mt-32 lg:mt-40  items-center justify-center overflow-hidden px-4 sm:px-8 '
-    >
-      <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
-
-        <h1
-        className={`mb-16 ${lobster.className} text-4xl font-bold text-center sm:text-5xl md:text-6xl lg:text-7xl`}
+      <main
+        id='works'
+        className='relative flex mt-20 sm:mt-24 md:mt-32 lg:mt-40 items-center justify-center overflow-hidden px-4 sm:px-8 '
       >
-        Latest Works
-      </h1>
-
-        {projects.map((project, index) => (
-          <div
-            key={project._id}
-            data-project-index={index}
-            className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#004D4D] py-5 sm:py-8 md:py-10 px-2 sm:px-4 md:px-6 transition-all duration-200 last:border-b last:border-[#004D4D] hover:opacity-70'
+        <div className='z-10 max-w-4xl w-full flex flex-col items-center justify-center'>
+          <h1
+            className={`mb-16 ${lobster.className} text-4xl font-bold text-center sm:text-5xl md:text-6xl lg:text-7xl`}
           >
-            <h2
-              data-project-index={index}
-              className={`m-0 text-normal sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
-                hoveredIndex === index ? 'text-[#004D4D]' : ''
-              }`}
-            >
-              {project.title}
-            </h2>
+            Latest Works
+          </h1>
 
-            {isMobile ? (
-              <Link href={`/${project.slug.current}`}>
-                <span className="text-[#004D4D] text-base sm:text-lg font-medium flex items-center gap-1">
-                  View
-                  <ArrowUpRight size={16} />
-                </span>
-              </Link>
-            ) : (
-              <p
+          {/* Only show first 3 projects */}
+          {projects.slice(0, 3).map((project, index) => (
+            <div
+              key={project._id}
+              data-project-index={index}
+              className='group w-full flex cursor-pointer items-center justify-between gap-6 border-t border-[#004D4D] py-5 sm:py-8 md:py-10 px-2 sm:px-4 md:px-6 transition-all duration-200 last:border-b last:border-[#004D4D] hover:opacity-70'
+            >
+              <h2
                 data-project-index={index}
-                className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
+                className={`m-0 text-normal sm:text-3xl md:text-4xl lg:text-5xl font-normal duration-400 group-hover:-translate-x-3 transition-transform ${
                   hoveredIndex === index ? 'text-[#004D4D]' : ''
                 }`}
               >
-                Design + Development
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
+                {project.title}
+              </h2>
 
-      {/* MODAL IMAGE PREVIEW (DISABLED ON MOBILE) */}
-      {!isMobile && (
-        <>
-          <motion.div
-            ref={modalRef}
-            variants={scaleAnimation}
-            initial='initial'
-            animate={hoveredIndex !== null ? 'enter' : 'closed'}
-            className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg'
-          >
-            <div
-              className='h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]'
-              style={{
-                transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)`,
-              }}
-            >
-              {projects.map((project, i) => (
-                <div
-                  key={project._id}
-                  className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(
-                    i,
-                    project.color
-                  )}`}
+              {isMobile ? (
+                <Link href={`/${project.slug.current}`}>
+                  <span className='text-[#004D4D] text-base sm:text-lg font-medium flex items-center gap-1'>
+                    View
+                    <ArrowUpRight size={16} />
+                  </span>
+                </Link>
+              ) : (
+                <p
+                  data-project-index={index}
+                  className={`text-lg font-light duration-400 group-hover:translate-x-3 transition-transform ${
+                    hoveredIndex === index ? 'text-[#004D4D]' : ''
+                  }`}
                 >
-                  <Image
-                    src={urlFor(project.mainImage)?.url() || ''}
-                    alt={project.title}
-                    width={300}
-                    height={0}
-                    draggable={false}
-                    className='object-contain h-full w-full rounded-md'
-                  />
-                </div>
-              ))}
+                  Design + Development
+                </p>
+              )}
             </div>
-          </motion.div>
+          ))}
+        </div>
 
-          {/* FOLLOWING "VIEW" BUTTON CURSOR */}
-          <div
-            ref={cursorLabelRef}
-            className={`fixed z-[101] transition-opacity duration-200 pointer-events-none select-none ${
-              hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {hoveredIndex !== null && projects[hoveredIndex] && (
-              <Link
-                href={`/${projects[hoveredIndex].slug.current}`}
-                className='pointer-events-auto'
+        {/* MODAL IMAGE PREVIEW (DISABLED ON MOBILE) */}
+        {!isMobile && (
+          <>
+            <motion.div
+              ref={modalRef}
+              variants={scaleAnimation}
+              initial='initial'
+              animate={hoveredIndex !== null ? 'enter' : 'closed'}
+              className='fixed z-[100] h-[350px] w-[400px] overflow-hidden pointer-events-none flex items-center justify-center rounded-md shadow-lg'
+            >
+              <div
+                className='h-full w-full absolute top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]'
+                style={{
+                  transform: `translateY(-${(hoveredIndex ?? 0) * 350}px)`,
+                }}
               >
-                <span className='flex w-[80px] h-[80px] bg-[#004D4D] text-center items-center justify-center rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
-                  Explore
-                </span>
-              </Link>
-            )}
-          </div>
-        </>
-      )}
-    </main>
-    <div className='py-15 w-full flex items-center justify-center'>
-      <Link href={'/works'}>
-            <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300  text-white px-5 py-4 rounded-full font-semibold'>
-        Discover More Work
-      </button>
-      </Link>
+                {projects.slice(0, 3).map((project, i) => (
+                  <div
+                    key={project._id}
+                    className={`flex h-full w-full items-center justify-center p-12 ${getBgColorClass(
+                      i,
+                      project.color
+                    )}`}
+                  >
+                    <Image
+                      src={urlFor(project.mainImage)?.url() || ''}
+                      alt={project.title}
+                      width={300}
+                      height={0}
+                      draggable={false}
+                      className='object-contain h-full w-full rounded-md'
+                    />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
 
-    </div>
+            {/* FOLLOWING "VIEW" BUTTON CURSOR */}
+            <div
+              ref={cursorLabelRef}
+              className={`fixed z-[101] transition-opacity duration-200 pointer-events-none select-none ${
+                hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {hoveredIndex !== null && projects[hoveredIndex] && (
+                <Link
+                  href={`/${projects[hoveredIndex].slug.current}`}
+                  className='pointer-events-auto'
+                >
+                  <span className='flex w-[80px] h-[80px] bg-[#004D4D] text-center items-center justify-center rounded-full shadow-lg text-white text-sm font-semibold transition-transform duration-200 hover:scale-105'>
+                    Explore
+                  </span>
+                </Link>
+              )}
+            </div>
+          </>
+        )}
+      </main>
+
+      <div className='py-15 w-full flex items-center justify-center'>
+        <Link href={'/works'}>
+          <button className='bg-[#004D4D] hover:bg-[#800020] cursor-pointer transition-colors duration-300 text-white px-5 py-4 rounded-full font-semibold'>
+            Discover More Work
+          </button>
+        </Link>
+      </div>
     </>
   )
 }
