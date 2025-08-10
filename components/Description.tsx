@@ -9,7 +9,7 @@ import Link from 'next/link'
 gsap.registerPlugin(ScrollTrigger)
 
 const fullPhrase =
-  'Empowering visionary brands with impactful digital experiences. Let’s shape the future with bold design, seamless code, and relentless creativity.'
+  'Currently focused on building responsive, animated front-end experiences, while expanding skills in backend development to become a full-stack developer.'
 
 const shortPhrase = 'Empowering brands with bold design and seamless code.'
 

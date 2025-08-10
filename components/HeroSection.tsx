@@ -97,12 +97,13 @@ export default function HeroSection() {
           className={`${lobster.className} w-[250px] sm:w-full text-4xl md:text-5xl lg:text-7xl leading-snug font-bold`}
         >
           <span className='line block overflow-hidden'>
-            <span className='inline-block'>Full Stack Next JS </span>
+            <span className='inline-block'>Front End</span>
           </span>
           <span className='line block overflow-hidden'>
             <span className='inline-block'>Web Developer & Designer</span>
           </span>
         </h1>
+        
 
         <div className='mt-6 md:w-full md:text-xl text-[#004D4D] font-semibold lg:text-2xl leading-snug'>
           <span className='line block overflow-hidden'>
