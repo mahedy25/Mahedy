@@ -50,7 +50,8 @@ export default function TransitionCurve({
 
       {/* Title Text */}
       <motion.p
-        className="fixed z-40 left-1/2 top-[40%] -translate-x-1/2 text-white text-[46px] text-center pointer-events-none"
+        className="fixed z-40 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
+                   text-white text-[46px] text-center pointer-events-none"
         {...anim(textVariant)}
       >
         {routeNames[pathname] || ''}
@@ -109,16 +110,15 @@ function anim(variants: Variants) {
 }
 
 const textVariant: Variants = {
-  initial: { opacity: 1 },
+  initial: { opacity: 1, top: '50%' },
   enter: {
     opacity: 0,
     top: '0%',
     transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
-    transitionEnd: { top: '47.5%' },
   },
   exit: {
     opacity: 1,
-    top: '40%',
+    top: '50%',
     transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
 }

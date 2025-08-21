@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { client } from '../sanity/client'
@@ -14,10 +13,7 @@ import { LucideLink } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const lobster = Lobster_Two({
-  weight: '400',
-  subsets: ['latin'],
-})
+const lobster = Lobster_Two({ weight: '400', subsets: ['latin'] })
 
 type Project = {
   _id: string
@@ -31,132 +27,104 @@ type Project = {
 
 export default function Works() {
   const [projects, setProjects] = useState<Project[]>([])
-  const containerRef = useRef<HTMLDivElement>(null)
   const mainRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     client
-      .fetch<Project[]>(
-        `*[_type == "projects"] | order(publishedAt desc){
-          _id, title, slug, mainImage, Link, publishedAt,
-          "color": projectColor.hex
-        }`
-      )
+      .fetch<Project[]>(`*[_type == "projects"] | order(publishedAt desc){
+        _id, title, slug, mainImage, Link, publishedAt,
+        "color": projectColor.hex
+      }`)
       .then(setProjects)
       .catch(console.error)
   }, [])
 
-  useGSAP(
-    () => {
-      if (projects.length > 0) {
-        // Fade in the section container
-        gsap.to(mainRef.current, {
-          autoAlpha: 1,
-          duration: 1.2,
-          ease: 'power2.out',
-        })
+  useEffect(() => {
+    if (!projects.length) return
 
-        // Smooth staggered animation for each project card
-        gsap.utils.toArray<HTMLElement>('.project-item').forEach((el, i) => {
-          gsap.fromTo(
-            el,
-            { opacity: 0, y: 80, scale: 0.95 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 1.2,
-              ease: 'power4.out',
-              delay: i * 0.15, // small stagger
-              scrollTrigger: {
-                trigger: el,
-                start: 'top 85%',
-                once: true,
-              },
-            }
-          )
-        })
-      }
-    },
-    { scope: containerRef, dependencies: [projects.length] }
-  )
+    gsap.to(mainRef.current, { autoAlpha: 1, duration: 0.6, ease: 'power2.out' })
+
+    gsap.utils.toArray<HTMLElement>('.project-item').forEach((el, i) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 40, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: 'power3.out',
+          delay: i * 0.1,
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        }
+      )
+    })
+  }, [projects])
 
   return (
     <main
-      id='works'
+      id="works"
       ref={mainRef}
-      className='relative opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900'
+      className="relative opacity-0 px-4 md:px-8 lg:px-16 xl:px-24 py-20 md:py-28 lg:py-36 max-w-7xl mx-auto text-gray-900"
     >
-      {/* Background Cube */}
       <svg
-        className='absolute top-20 -left-15 w-72 h-72 opacity-10 text-[#800020] z-0'
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 100 100'
-        fill='currentColor'
-        aria-hidden='true'
+        className="absolute top-20 -left-15 w-72 h-72 opacity-10 text-[#800020] z-0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 100 100"
+        fill="currentColor"
+        aria-hidden="true"
       >
-        <rect x='10' y='10' width='80' height='80' />
+        <rect x="10" y="10" width="80" height="80" />
       </svg>
 
-      {/* Title Section */}
-      <section className='mb-16 md:mb-24 text-center relative z-10'>
+      <section className="mb-16 md:mb-24 text-center relative z-10">
         <h1
           className={`${lobster.className} text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-800`}
         >
           My Works
         </h1>
-        <p className='mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto'>
+        <p className="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
           A showcase of my best projects, crafted with precision and passion.
         </p>
       </section>
 
-      {/* Projects */}
-      <div
-        ref={containerRef}
-        className='space-y-24 md:space-y-32 relative z-10'
-      >
+      <div className="space-y-24 md:space-y-32 relative z-10">
         {projects.map((project) => (
-          <div
-            key={project._id}
-            className='project-item flex flex-col items-center gap-8 lg:gap-16'
-          >
-            {/* Project Image */}
-            <div className='relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-lg'>
+          <div key={project._id} className="project-item flex flex-col items-center gap-8 lg:gap-16">
+            <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-lg">
               <Image
                 src={urlFor(project.mainImage).url()}
                 alt={project.title}
                 fill
-                className='object-contain'
+                className="object-contain"
               />
             </div>
 
-            {/* Project Info */}
-            <div className='w-full text-center max-w-3xl mx-auto px-4 space-y-4'>
-              <h2 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 tracking-tight'>
+            <div className="w-full text-center max-w-3xl mx-auto px-4 space-y-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 tracking-tight">
                 {project.title}
               </h2>
-              <p className='text-sm text-gray-500'>
+              <p className="text-sm text-gray-500">
                 Published on{' '}
-                <span className='font-medium text-gray-700'>
+                <span className="font-medium text-gray-700">
                   {new Date(project.publishedAt).toLocaleDateString()}
                 </span>
               </p>
 
-              {/* Buttons */}
-              <div className='flex flex-col sm:flex-row justify-center gap-4 pt-4'>
+              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                 <Link
                   href={`/${project.slug.current}`}
-                  className='px-6 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300'
+                  className="px-6 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300"
                 >
                   Let’s Go Deeper
                 </Link>
                 <Link
                   href={project.Link}
-                  target='_blank'
-                  className='flex items-center justify-center gap-2 px-6 py-2 text-sm font-medium text-white rounded-lg bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300'
+                  target="_blank"
+                  className="flex items-center justify-center gap-2 px-6 py-2 text-sm font-medium text-white rounded-lg bg-[#004D4D] hover:bg-[#800020] transition-colors duration-300"
                 >
                   Visit Live Site
-                  <LucideLink className='w-4 h-4' />
+                  <LucideLink className="w-4 h-4" />
                 </Link>
               </div>
             </div>
